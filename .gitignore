@@ -28,8 +28,8 @@ Thumbs.db
 .env
 
 # Static and media (if not using external storage)
-static/
-media/
+/static/
+/media/
 
 # Byte-compiled files
 *.py[co]
