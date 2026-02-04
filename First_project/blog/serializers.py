@@ -13,3 +13,5 @@ class FileModelSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_file_path(obj):
         return obj.file.path if obj.file else None
+
+
