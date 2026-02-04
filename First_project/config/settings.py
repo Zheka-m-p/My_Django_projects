@@ -128,3 +128,17 @@ MEDIA_ROOT = BASE_DIR / "media/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Настройка почты - Как отправлять почту (через SMTP-сервер)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# ПОКА НЕ ЗАПОЛНЕНО
+
+EMAIL_HOST = 'smtp.yandex.ru' # Адрес почтового сервера (Яндекс)
+EMAIL_PORT = 465 # Порт для подключения к серверу (465 — с шифрованием SSL)
+EMAIL_HOST_USER = "" # Твоя почта (логин)
+EMAIL_HOST_PASSWORD = "" # Пароль от почты
+EMAIL_USE_TLS = False # Шифрование TLS (выключено, т.к. используется SSL)
+EMAIL_USE_SSL = True # Шифрование SSL .P.S. только одно из двух дожно быть активировано True
+SERVER_EMAIL = EMAIL_HOST_USER # От кого письма с сервера
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER # 	От кого письма по умолчанию
