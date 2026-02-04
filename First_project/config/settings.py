@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,10 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f7sw#==1g%!s35r-vothjl+60zy4%1bt482!^qg7@*ge5n3v&k'
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY missing in .env file!")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG') == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -117,7 +124,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-# STATIC_URL = 'static/'
+# STATIC_URL = 'static/' # - изначально была
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "static/"
 
@@ -132,12 +139,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Настройка почты - Как отправлять почту (через SMTP-сервер)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# ПОКА НЕ ЗАПОЛНЕНО
 
 EMAIL_HOST = 'smtp.yandex.ru' # Адрес почтового сервера (Яндекс)
 EMAIL_PORT = 465 # Порт для подключения к серверу (465 — с шифрованием SSL)
-EMAIL_HOST_USER = "" # Твоя почта (логин)
-EMAIL_HOST_PASSWORD = "" # Пароль от почты
+EMAIL_HOST_USER = os.getenv('EMAIL_USER') # Твоя почта (логин)
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD') # Пароль от почты
 EMAIL_USE_TLS = False # Шифрование TLS (выключено, т.к. используется SSL)
 EMAIL_USE_SSL = True # Шифрование SSL .P.S. только одно из двух дожно быть активировано True
 SERVER_EMAIL = EMAIL_HOST_USER # От кого письма с сервера
