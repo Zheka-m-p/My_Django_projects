@@ -17,3 +17,18 @@ class GetFilePath(APIView):
         except ObjectDoesNotExist:
             return Response(None, status=404) # 6. Если файл не найден — ошибка 404
 
+
+class CreateBotUser(APIView):
+    @staticmethod
+    def post(request):
+        usr_obj: models.BotUserModel = models.BotUserModel.objects.get_or_create(
+            chat_id=request.data['chat_id'],
+            defaults={
+                'first_name': request.data['first_name'],
+                'last_name': request.data['last_name'],
+                'username': request.data['username'],
+            })[0] # Создаем нового пользователя, если еще нет, иначе получаем старого
+
+        usr_obj.save() # обновляем значение поля updated на актуальное время, вызвав сохранение объекта.
+        return Response(status=200) # возвращаем ответ со статус-кодом 200:
+
