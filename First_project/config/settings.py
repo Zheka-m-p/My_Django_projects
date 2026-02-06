@@ -47,6 +47,8 @@ INSTALLED_APPS = [
 
     'rest_framework', # добавлен DRF
     'blog',
+    'mptt', # древовидные модели для баз данных
+
 ]
 
 MIDDLEWARE = [

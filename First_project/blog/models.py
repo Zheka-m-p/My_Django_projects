@@ -1,5 +1,9 @@
 from django.db import models
 
+from django.urls import reverse
+from mptt.managers import TreeManager
+from mptt.models import MPTTModel, TreeForeignKey
+
 
 class PostFilesModel(models.Model):
     title = models.CharField(max_length=200, verbose_name='Имя файла')
@@ -44,3 +48,37 @@ class BotUserModel(models.Model):
 
     def __str__(self):
         return self.first_name
+
+
+
+class CategoryModel(MPTTModel):
+    title = models.CharField(max_length=100,
+                             verbose_name="Заголовок")
+    slug = models.SlugField(verbose_name="Альт. заголовок")
+    parent = TreeForeignKey('self',
+                            on_delete=models.CASCADE,
+                            null=True,
+                            blank=True,
+                            related_name='children',
+                            db_index=True,
+                            verbose_name='Родительская категория')
+    description = models.CharField(max_length=350,
+                                   verbose_name="Описание",
+                                   blank=True)
+
+    objects = TreeManager()
+
+    class MPTTMeta:
+        order_insertion_by = ['title']
+
+    class Meta:
+        unique_together = 'parent', 'slug'
+        verbose_name = 'Категория поста'
+        verbose_name_plural = 'Категории постов'
+
+    def get_absolute_url(self):
+        return reverse('blog:category_page', args=[int(self.pk), str(self.slug)])
+
+    def __str__(self):
+        return self.title
+
