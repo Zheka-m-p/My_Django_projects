@@ -9,6 +9,7 @@ app_name = 'blog'
 urlpatterns = [
     path('', views.index, name='home'),
     path('category/<int:pk>-<str:slug>/', views.category_page, name='category_page'),
+    # path('post/<int:pk>-<str:slug>/', views.post_page, name='post_page'), чуть позже раскоменчу
 
 ]
 
