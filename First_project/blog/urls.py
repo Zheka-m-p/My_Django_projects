@@ -8,6 +8,7 @@ app_name = 'blog'
 # Паттерны сайта
 urlpatterns = [
     path('', views.index, name='home'),
+    path('category/<int:pk>-<str:slug>/', views.category_page, name='category_page'),
 
 ]
 
