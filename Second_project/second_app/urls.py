@@ -17,6 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+# from horoscope.views import leo, scorpion
+from horoscope import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('horoscope/leo/', views.leo),
+    path('horoscope/scorpion/', views.scorpion),
+
 ]
