@@ -5,6 +5,6 @@ app_name = 'horoscope'
 
 urlpatterns = [
     path('<int:number_zodiac>/', views.get_info_about_zodiac_sign_by_number),
-    path('<str:sign_zodiac>/', views.get_info_about_zodiac_sign),
+    path('<str:sign_zodiac>/', views.get_info_about_zodiac_sign, name='zodiac'),
 
 ]

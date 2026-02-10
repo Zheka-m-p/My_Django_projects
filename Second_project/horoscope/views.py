@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound
 
 zodiac_descriptions = {
@@ -19,18 +19,19 @@ zodiac_descriptions = {
 zodiac_numbers = dict(zip(range(1, 13), list(zodiac_descriptions.keys())))
 
 # Create your views here.
-def get_info_about_zodiac_sign_by_number(request, number_zodiac):
-    zodiac = zodiac_numbers.get(number_zodiac) # имя зодиак-строку получаем
-    if zodiac:
-        description = zodiac_descriptions.get(zodiac.lower())
-        return HttpResponse(description)
-    else:
-        return HttpResponseNotFound(f'Неизвестный номер зодиака - {number_zodiac}')
-
-
 def get_info_about_zodiac_sign(request, sign_zodiac): # можно совместить с вьюхой выше, но пока пусть так
     description = zodiac_descriptions.get(sign_zodiac.lower())
     if description:
         return HttpResponse(description)
     else:
-        return HttpResponseNotFound(f'Неизвестный знак зодиака {sign_zodiac}')
+        return HttpResponseNotFound(f'Неизвестный знак зодиака: {sign_zodiac}')
+
+
+def get_info_about_zodiac_sign_by_number(request, number_zodiac):
+    zodiac = zodiac_numbers.get(number_zodiac) # получаем имя зодиака-строку (или None)
+    print(zodiac)
+    if zodiac:
+        return redirect('horoscope:zodiac', sign_zodiac=zodiac)
+    else:
+        return HttpResponseNotFound(f'Нет знака зодиака с номером: {number_zodiac}')
+    # return get_info_about_zodiac_sign(request, zodiac)
