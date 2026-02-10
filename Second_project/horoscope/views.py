@@ -16,7 +16,7 @@ zodiac_descriptions = {
     'pisces': 'Рыбы - двенадцатый знак зодиака, планеты Юпитер (с 20 февраля по 20 марта).',
 }
 
-zodiac_numbers = dict(zip(range(1, 13), list(zodiac_descriptions.keys())))
+zodiac_numbers = dict(zip(range(1, len(zodiac_descriptions) + 1), list(zodiac_descriptions.keys())))
 
 # Create your views here.
 def get_info_about_zodiac_sign(request, sign_zodiac): # можно совместить с вьюхой выше, но пока пусть так
@@ -29,7 +29,6 @@ def get_info_about_zodiac_sign(request, sign_zodiac): # можно совмес�
 
 def get_info_about_zodiac_sign_by_number(request, number_zodiac):
     zodiac = zodiac_numbers.get(number_zodiac) # получаем имя зодиака-строку (или None)
-    print(zodiac)
     if zodiac:
         return redirect('horoscope:zodiac', sign_zodiac=zodiac)
     else:
