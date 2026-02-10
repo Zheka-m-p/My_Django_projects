@@ -1,87 +1,54 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound
-from django.urls import reverse
 
-zodiac_descriptions = {
-    'aries': 'Овен - первый знак зодиака, планета Марс (с 21 марта по 20 апреля).',
-    'taurus': 'Телец - второй знак зодиака, планета Венера (с 21 апреля по 21 мая).',
-    'gemini': 'Близнецы - третий знак зодиака, планета Меркурий (с 22 мая по 21 июня).',
-    'cancer': 'Рак - четвёртый знак зодиака, Луна (с 22 июня по 22 июля).',
-    'leo': ' Лев - пятый знак зодиака, солнце (с 23 июля по 21 августа).',
-    'virgo': 'Дева - шестой знак зодиака, планета Меркурий (с 22 августа по 23 сентября).',
-    'libra': 'Весы - седьмой знак зодиака, планета Венера (с 24 сентября по 23 октября).',
-    'scorpio': 'Скорпион - восьмой знак зодиака, планета Марс (с 24 октября по 22 ноября).',
-    'sagittarius': 'Стрелец - девятый знак зодиака, планета Юпитер (с 23 ноября по 22 декабря).',
-    'capricorn': 'Козерог - десятый знак зодиака, планета Сатурн (с 23 декабря по 20 января).',
-    'aquarius': 'Водолей - одиннадцатый знак зодиака, планеты Уран и Сатурн (с 21 января по 19 февраля).',
-    'pisces': 'Рыбы - двенадцатый знак зодиака, планеты Юпитер (с 20 февраля по 20 марта).',
-}
+from .data_zodiac import data_zodiac, types_zodiac_dict
 
-zodiac_numbers = dict(zip(range(1, len(zodiac_descriptions) + 1), list(zodiac_descriptions.keys())))
-types_zodiac_dict = {
-    'fire': ['aries', 'leo', 'sagittarius'],
-    'earth': ['taurus', 'virgo', 'capricorn'],
-    'air': ['gemini', 'libra', 'aquarius'],
-    'water': ['cancer', 'scorpio', 'pisces']
-}
 
 # Create your views here.
-def get_info_about_zodiac_sign(request, sign_zodiac): # можно совместить с вьюхой выше, но пока пусть так
-    description = zodiac_descriptions.get(sign_zodiac.lower())
-    if description:
-        return HttpResponse(f'<h2>{description}</h2>')
-    else:
-        return HttpResponseNotFound(f'Неизвестный знак зодиака: {sign_zodiac}')
-
-
-def get_info_about_zodiac_sign_by_number(request, number_zodiac):
-    zodiac = zodiac_numbers.get(number_zodiac) # получаем имя зодиака-строку (или None)
-    if zodiac:
-        return redirect('horoscope:zodiac', sign_zodiac=zodiac)
-    else:
-        return HttpResponseNotFound(f'Нет знака зодиака с номером: {number_zodiac}')
-    # return get_info_about_zodiac_sign(request, zodiac)
-
 def index_horoscope(request):
-    zodiac = list(zodiac_descriptions)
-    zodiac_elements = ''
-    for elem in zodiac:
-        redirect_url = reverse('horoscope:zodiac', args=[elem,])
-        zodiac_elements += f'<li><a href="{redirect_url}">{elem.title()}</a></li>'
-    response = f'''
-    <ol>
-        {zodiac_elements}
-    </ol>
-    '''
-    return HttpResponse(response)
+    data = data_zodiac
+    context = {
+        'data': data
+    }
+    return render(request, 'horoscope/index_horoscope.html', context)
+
+
+def get_info_about_sign_zodiac(request, sign_zodiac):
+    data = [elem for elem in data_zodiac if elem['name'] == sign_zodiac]
+    if not data:
+        return HttpResponseNotFound(f'<h2>Неизвестный знак зодиака: {sign_zodiac}</h2>')
+    context = {
+        'data': data[0]
+    }
+    return render(request, 'horoscope/info_zodiac.html', context)
+
+
+def get_info_about_sign_zodiac_by_number(request, number_zodiac):
+    data = [elem for elem in data_zodiac if elem['number'] == number_zodiac]
+    if not data:
+        return HttpResponseNotFound(f'<h2>Неизвестный номер зодиака: {number_zodiac}</h2>')
+    return redirect('horoscope:sign_zodiac', sign_zodiac=data[0]['name'])
+
 
 def type_zodiac(request):
-    zodiac_types = ''
-    for elem in types_zodiac_dict:
-        redirect_url = reverse('horoscope:type_element', args=[elem,]) # ссылка на тип зодиака(напр. вода)
-        zodiac_types += f'<li><a href="{redirect_url}">{elem.title()}</a></li>'
-    response = f'''
-    <ul>
-        {zodiac_types}
-    </ul>
-    '''
-    return HttpResponse(response)
+    data = list(types_zodiac_dict)
+    context = {
+        'data': data
+    }
+    return render(request, 'horoscope/type_zodiac.html', context)
 
 
 def type_element(request, type_element):
-    if type_element not in types_zodiac_dict:
-        return HttpResponseNotFound('Ошибка, нет такого типа элемента в знаках зодиака')
+    data = [elem for elem in data_zodiac if elem['element'] == type_element]
+    if not data:
+        return HttpResponseNotFound(f'Неизвестный тип элемента: {type_element}')
+    context = {
+        'data': data
+    }
+    return render(request, 'horoscope/type_element.html', context)
 
-    type_elements = types_zodiac_dict.get(type_element)
-    # print(type_elements)
 
-    zodiac_types_elements = ''
-    for elem in type_elements:
-        redirect_url = reverse('horoscope:zodiac', args=[elem,])
-        zodiac_types_elements += f'<li><a href="{redirect_url}">{elem.title()}</a></li>'
-    response = f'''
-    <ul>
-        {zodiac_types_elements}
-    </ul>
-    '''
-    return HttpResponse(response)
+
+
+
+

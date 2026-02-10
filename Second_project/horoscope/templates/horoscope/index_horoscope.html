@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Все знаки зодиака</title>
+</head>
+<body>
+    <ol>
+        {% for elem in data %}
+        <li><a href="{% url 'horoscope:sign_zodiac' elem.name %}">{{elem.name}}</a></li>
+        {% endfor %}
+    </ol>
+</body>
+</html>
