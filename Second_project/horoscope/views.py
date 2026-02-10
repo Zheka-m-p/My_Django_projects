@@ -18,6 +18,12 @@ zodiac_descriptions = {
 }
 
 zodiac_numbers = dict(zip(range(1, len(zodiac_descriptions) + 1), list(zodiac_descriptions.keys())))
+types_zodiac_dict = {
+    'fire': ['aries', 'leo', 'sagittarius'],
+    'earth': ['taurus', 'virgo', 'capricorn'],
+    'air': ['gemini', 'libra', 'aquarius'],
+    'water': ['cancer', 'scorpio', 'pisces']
+}
 
 # Create your views here.
 def get_info_about_zodiac_sign(request, sign_zodiac): # можно совместить с вьюхой выше, но пока пусть так
@@ -46,5 +52,36 @@ def index_horoscope(request):
     <ol>
         {zodiac_elements}
     </ol>
+    '''
+    return HttpResponse(response)
+
+def type_zodiac(request):
+    zodiac_types = ''
+    for elem in types_zodiac_dict:
+        redirect_url = reverse('horoscope:type_element', args=[elem,]) # ссылка на тип зодиака(напр. вода)
+        zodiac_types += f'<li><a href="{redirect_url}">{elem.title()}</a></li>'
+    response = f'''
+    <ul>
+        {zodiac_types}
+    </ul>
+    '''
+    return HttpResponse(response)
+
+
+def type_element(request, type_element):
+    if type_element not in types_zodiac_dict:
+        return HttpResponseNotFound('Ошибка, нет такого типа элемента в знаках зодиака')
+
+    type_elements = types_zodiac_dict.get(type_element)
+    # print(type_elements)
+
+    zodiac_types_elements = ''
+    for elem in type_elements:
+        redirect_url = reverse('horoscope:zodiac', args=[elem,])
+        zodiac_types_elements += f'<li><a href="{redirect_url}">{elem.title()}</a></li>'
+    response = f'''
+    <ul>
+        {zodiac_types_elements}
+    </ul>
     '''
     return HttpResponse(response)
