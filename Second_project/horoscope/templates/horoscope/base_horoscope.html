@@ -5,6 +5,11 @@
     <title>{% block title %} {% endblock title %}</title>
 </head>
 <body>
-    {% block body %} {% endblock body %}
+    <header>
+        {% include 'includes/navbar.html' %}
+    </header>
+    <main>
+        {% block body %}{% endblock body %}
+    </main>
 </body>
 </html>
