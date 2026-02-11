@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Типы элементов {{data.0.element}}</title>
-</head>
-<body>
+{% extends 'horoscope/base_horoscope.html' %}
+
+{% block title %} Знаки зодиака с элементом: {{data.0.element}} {% endblock title %}
+
+{% block body %}
     <ul>
         {% for elem in data %}
             <li><a href="{% url 'horoscope:sign_zodiac' elem.name %}">{{elem.name}}</a></li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock body %}
