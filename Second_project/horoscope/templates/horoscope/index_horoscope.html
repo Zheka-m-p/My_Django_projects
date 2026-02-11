@@ -1,8 +1,14 @@
 {% extends 'horoscope/base_horoscope.html' %}
+{% load static %}
+
+{% block css_update %}
+<link rel="stylesheet" href="{% static 'horoscope/css/index_horoscope.css' %}">
+{% endblock css_update %}
 
 {% block title %} Все знаки зодиака {% endblock title %}
 
 {% block body %}
+    <h1>мухахахахах - я красный цвет</h1>
     <ol>
         {% for elem in data %}
             <li><a href="{% url 'horoscope:sign_zodiac' elem.name %}">{{elem.name}}</a></li>
