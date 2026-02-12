@@ -8,10 +8,10 @@
 {% block title %} Все знаки зодиака {% endblock title %}
 
 {% block body %}
-    <h1>мухахахахах - я красный цвет</h1>
-    <ol>
+<!--    <h1>мухахахахах - я красный цвет</h1>-->
+    <ul>
         {% for elem in data %}
             <li><a href="{% url 'horoscope:sign_zodiac' elem.name %}">{{elem.name}}</a></li>
         {% endfor %}
-    </ol>
+    </ul>
 {% endblock body %}

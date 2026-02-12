@@ -1,3 +1,7 @@
-html {
-    color: red;
+html{
+    background-color: #3199dc;
+}
+
+ul a:hover, ul a:active {
+  color: #eca8b5;
 }
