@@ -51,9 +51,10 @@
 /* Дополнительно: если хочешь добавить "даты" — можно так */
 .dates {
   text-align: center;
-  color: #777;
-  font-style: italic;
-  margin-bottom: 1rem;
+  color: #000;          /* чёрный — всегда видно */
+  font-weight: 700;     /* жирный */
+  font-size: 1.2rem;
+  margin: 0.8rem 0;
 }
 
 /* === Старые стили (оставлены для совместимости) === */

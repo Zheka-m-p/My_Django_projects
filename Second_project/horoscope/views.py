@@ -16,7 +16,12 @@ def index_horoscope(request):
 def get_info_about_sign_zodiac(request, sign_zodiac):
     data = [elem for elem in data_zodiac if elem['name'] == sign_zodiac] # получаем конкретный словарь знака зодиака
     if not data:
-        return HttpResponseNotFound(f'<h2>Неизвестный знак зодиака: {sign_zodiac}</h2>')
+        context = {
+            'error_message': f'Знак зодиака "{sign_zodiac}" не найден.',
+            'show_home_link': True
+        }
+        return render(request, 'horoscope/error_page.html', context)
+        # return HttpResponseNotFound(f'<h2>Неизвестный знак зодиака: {sign_zodiac}</h2>')
     context = {
         'data': data[0]
     }
@@ -26,7 +31,12 @@ def get_info_about_sign_zodiac(request, sign_zodiac):
 def get_info_about_sign_zodiac_by_number(request, number_zodiac):
     data = [elem for elem in data_zodiac if elem['number'] == number_zodiac] # так же знак зодиака, но уже по номеру
     if not data:
-        return HttpResponseNotFound(f'<h2>Неизвестный номер зодиака: {number_zodiac}</h2>')
+        context = {
+            'error_message': f'Номер знака зодиака "{number_zodiac}" не найден.',
+            'show_home_link': True
+        }
+        return render(request, 'horoscope/error_page.html', context)
+        # return HttpResponseNotFound(f'<h2>Неизвестный номер зодиака: {number_zodiac}</h2>')
     return redirect('horoscope:sign_zodiac', sign_zodiac=data[0]['name'])
 
 
@@ -41,7 +51,12 @@ def type_zodiac(request):
 def type_element(request, type_element):
     data = [elem for elem in data_zodiac if elem['element'] == type_element] # словари, с переданным парамером стихии
     if not data:
-        return HttpResponseNotFound(f'Неизвестный тип элемента: {type_element}')
+        context = {
+            'error_message': f'Неизвестный тип элемента: "{type_element}".',
+            'show_home_link': True
+        }
+        return render(request, 'horoscope/error_page.html', context)
+        # return HttpResponseNotFound(f'Неизвестный тип элемента: {type_element}')
     context = {
         'data': data
     }
