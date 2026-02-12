@@ -52,7 +52,7 @@ def type_element(request, type_element):
     data = [elem for elem in data_zodiac if elem['element'] == type_element] # словари, с переданным парамером стихии
     if not data:
         context = {
-            'error_message': f'Неизвестный тип элемента: "{type_element}".',
+            'error_message': f'Неизвестный тип стихии: "{type_element}".',
             'show_home_link': True
         }
         return render(request, 'horoscope/error_page.html', context)

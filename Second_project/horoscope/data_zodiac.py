@@ -103,3 +103,18 @@ types_zodiac_dict = {
     'air': ['gemini', 'libra', 'aquarius'],
     'water': ['cancer', 'scorpio', 'pisces']
 }
+
+ZODIAC_ICONS = {
+    'aries': '♈',
+    'taurus': '♉',
+    'gemini': '♊',
+    'cancer': '♋',
+    'leo': '♌',
+    'virgo': '♍',
+    'libra': '♎',
+    'scorpio': '♏',
+    'sagittarius': '♐',
+    'capricorn': '♑',
+    'aquarius': '♒',
+    'pisces': '♓',
+}

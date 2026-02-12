@@ -1,5 +1,7 @@
 {% extends 'horoscope/base_horoscope.html' %}
+
 {% load static %}
+{% load zodiac_filters %}
 
 {% block css_update %}
 <link rel="stylesheet" href="{% static 'horoscope/css/info_zodiac.css' %}">
@@ -9,7 +11,7 @@
 
 {% block body %}
 <div class="info-container">
-  <h1 class="sign-title">{{ data.name | title }}</h1>
+  <h1 class="sign-title">{{ data.name | title }} {{ data.name | zodiac_icon }}</h1>
   <p class="dates">{{ data.dates }}</p>
 
   <div class="info-card">
