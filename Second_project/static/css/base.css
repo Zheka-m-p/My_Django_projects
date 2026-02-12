@@ -1,7 +1,47 @@
-html{
-    background-color: #3199dc;
+/* base.css */
+html {
+  background: linear-gradient(135deg, #3199dc, #2a7ab9);
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-ul a:hover, ul a:active {
+.navbar {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.8rem 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.nav-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #444;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
   color: #eca8b5;
+  background: #f8f8f8;
+}
+
+.nav-link.active {
+  color: #eca8b5;
+  font-weight: 700;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.nav-separator {
+  color: #ccc;
+  font-size: 1.2rem;
 }

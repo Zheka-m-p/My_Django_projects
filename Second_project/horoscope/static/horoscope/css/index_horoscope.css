@@ -1,23 +1,57 @@
-ul, ol {
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
-    column-count: 2;
-    list-style-type: none;
-    background-color: #f1f1f1;
-    width: 90%;
-    max-width: 35rem;
-    border-radius: 20px;
-    margin: 2rem auto;
-    padding: 1px;
+/* index_horoscope.css — ЧЁТКОЕ разделение, как карточки */
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 2rem auto;
+  max-width: 500px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 колонки */
+  gap: 1.2rem; /* отступ между карточками */
 }
 
-ul li {
-    text-align: center;
-    width: 100%;
-    font-size: 3rem;
-    padding: 2rem 1rem;
+li {
+  /* Каждая ячейка — отдельная карточка */
+  background: white;
+  border-radius: 10px;
+  padding: 1.4rem 0;
+  text-align: center;
+  font-size: 1.8rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-ul a:hover, ul a:active {
+/* Тонкая горизонтальная линия внутри карточки (для стиля) */
+li::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: #eee;
+}
+
+/* Убираем линию у последней строки в каждой колонке */
+li:nth-child(2n)::after,
+li:nth-child(2n-1):last-child::after {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  display: block;
+  padding: 0.4rem 0;
+  transition: all 0.3s;
+}
+
+a:hover {
   color: #eca8b5;
+  transform: translateY(-2px);
+  text-shadow: 0 1px 3px rgba(236, 168, 181, 0.5);
+  background: #fff9fb;
+  border-radius: 8px;
 }

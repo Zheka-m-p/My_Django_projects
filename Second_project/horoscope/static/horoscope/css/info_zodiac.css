@@ -1,8 +1,74 @@
+/* info_zodiac.css — обновлённый стиль для страницы одного знака */
+
+.info-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.info-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+/* Блок элемент/планета — цвет по стихии */
+.element-block {
+  padding: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.element-block.fire { background: linear-gradient(to right, #ff6b6b, #ff9e80); }
+.element-block.earth { background: linear-gradient(to right, #8d9f87, #a3b894); }
+.element-block.air   { background: linear-gradient(to right, #87ceeb, #b0e0e6); }
+.element-block.water { background: linear-gradient(to right, #87ceeb, #4682b4); }
+
+/* Описание — светлый фон */
+.description-block {
+  padding: 1.8rem;
+  background: #f8f9fa;
+  border-top: 1px solid #eee;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* Заголовок (название знака) */
+.sign-title {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  color: #333;
+  text-transform: capitalize;
+}
+
+/* Дополнительно: если хочешь добавить "даты" — можно так */
+.dates {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+/* === Старые стили (оставлены для совместимости) === */
 h2 {
-    background-color: yellow;
+  /* Убираем старый стиль */
+  /* background-color: yellow; */
+  /* Добавляем новый */
+  display: none; /* Скрываем h2, потому что теперь используем element-block */
 }
 
 h3 {
-    background-color: gray;
-    color: #f5f5f5;
+  /* Убираем старый стиль */
+  /* background-color: gray; */
+  /* color: #f5f5f5; */
+  /* Добавляем новый */
+  display: none; /* Скрываем h3, потому что теперь используем description-block */
 }
+

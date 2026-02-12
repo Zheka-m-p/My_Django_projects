@@ -1,7 +1,9 @@
-<nav>
-  <a href="{% url 'horoscope:home_horoscope' %}">Главная</a> |
-  <a href="{% url 'horoscope:types_element_zodiac' %}">Типы стихий зодиака</a> |
-  <a href="https://puzzle-english.com/directory/zodiac-sign">Источник</a>
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="{% url 'horoscope:home_horoscope' %}" class="nav-link active">Все знаки</a>
+    <span class="nav-separator">|</span>
+    <a href="{% url 'horoscope:types_element_zodiac' %}" class="nav-link">Типы стихий</a>
+    <span class="nav-separator">|</span>
+    <a href="https://puzzle-english.com/directory/zodiac-sign" class="nav-link" target="_blank">Источник</a>
+  </div>
 </nav>
-
-

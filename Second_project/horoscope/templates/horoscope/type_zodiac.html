@@ -1,4 +1,9 @@
 {% extends 'horoscope/base_horoscope.html' %}
+{% load static %}
+
+{% block css_update %}
+<link rel="stylesheet" href="{% static 'horoscope/css/type_zodiac.css' %}">
+{% endblock css_update %}
 
 {% block title %} Типы стихий знаков зодиака {% endblock title %}
 

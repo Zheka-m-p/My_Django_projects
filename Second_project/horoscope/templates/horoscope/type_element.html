@@ -1,4 +1,10 @@
 {% extends 'horoscope/base_horoscope.html' %}
+{% load static %}
+
+{% block css_update %}
+<link rel="stylesheet" href="{% static 'horoscope/css/type_element.css' %}">
+{% endblock css_update %}
+
 
 {% block title %} Знаки зодиака с элементом: {{data.0.element}} {% endblock title %}
 

@@ -5,9 +5,21 @@
 <link rel="stylesheet" href="{% static 'horoscope/css/info_zodiac.css' %}">
 {% endblock css_update %}
 
-{% block title %} Знак зодиака: {{data.name}} {% endblock title %}
+{% block title %} {{ data.name | title }} — знак зодиака {% endblock title %}
 
 {% block body %}
-    <h2>элемент - {{data.element}}, название - {{data.name}}, планета - {{data.planet}}</h2>
-    <h3>{{ data.description }}</h3>
+<div class="info-container">
+  <h1 class="sign-title">{{ data.name | title }}</h1>
+  <p class="dates">{{ data.dates }}</p>
+
+  <div class="info-card">
+    <div class="element-block {{ data.element }}">
+      Элемент: {{ data.element | title }}<br>
+      Планета: {{ data.planet }}
+    </div>
+    <div class="description-block">
+      {{ data.description }}
+    </div>
+  </div>
+</div>
 {% endblock body %}
