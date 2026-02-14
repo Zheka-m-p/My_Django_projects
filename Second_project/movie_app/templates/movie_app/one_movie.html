@@ -1,6 +1,6 @@
 {% extends 'movie_app/base_movie.html' %}
 
-{% block title %}{{ movie.name }} — {{ movie.rating }}%{% endblock %}
+{% block title %}{{ movie.name }}{% endblock %}
 
 {% block body %}
 <div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
@@ -9,7 +9,7 @@
     <div style="margin-top: 15px; background-color: yellow;">
         <p><strong>Рейтинг:</strong> {{ movie.rating }}%</p>
         <p><strong>Год выпуска:</strong> {{ movie.year|default:"Не указан" }}</p>
-        <p><strong>Бюджет:</strong> $ {{ movie.budget|floatformat:0 }}</p>
+        <p><strong>Бюджет:</strong> {{ movie.budget|floatformat:0 }}$</p>
     </div>
 
     <hr style="margin: 20px 0;">
