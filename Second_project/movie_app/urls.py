@@ -5,4 +5,6 @@ app_name = 'movie' # чисто название, может быть любым
 
 urlpatterns = [
     path('', views.show_all_movie, name='all_movies'),
+    path('movie/<int:id>/', views.one_movie, name='solo_movie'),
+
 ]
