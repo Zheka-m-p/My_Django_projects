@@ -10,7 +10,8 @@
         {% for movie in movies %}
         <div style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
             <h3 style="margin: 0; color: #007bff;">
-                <a href="{% url 'movie:solo_movie' movie.id %}" style="text-decoration: none;">
+<!--                <a href="{% url 'movie:solo_movie' movie.id %}" style="text-decoration: none;">-->
+                <a href="{{ movie.get_absolute_url }}" style="text-decoration: none;">
                     {{ movie.name }}
                 </a>
             </h3>
