@@ -37,8 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles', # должно быть для работы файлов статики
+    'django_extensions',  # ← добавить для удобства работы с Джангоу
+                            # Удобно смотреть все URLы
+                            # Быстро тестировать модели в shell
+                            # Рисовать диаграммы базы данных
+                            # Автоматические slug’и
 
     'horoscope',
+    'movie_app',
 
 ]
 
