@@ -1,10 +1,14 @@
 from django.contrib import admin, messages
-from . models import Movie, Producer
+from . models import Movie, Producer, Actor
 from django.db.models import QuerySet
 
 # Register your models here.
 @admin.register(Producer)
 class ProducerAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Actor)
+class ActorAdmin(admin.ModelAdmin):
     pass
 
 
@@ -35,7 +39,7 @@ class RatingMovieFilter(admin.SimpleListFilter):
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     # Настройки для всех записей
-    list_display = ('name', 'rating', 'year', 'producer', 'rating_status')  # добавляем нужные нам колонки для отображения на сайте
+    list_display = ('name', 'rating', 'year', 'producer','rating_status')  # добавляем нужные нам колонки для отображения на сайте
     search_fields = ('name', 'year',)  # добавляем поле поиска по данным колонкам
     list_filter = ('budget', 'currency', RatingMovieFilter)  # добавляем фильтр по данной колонке, можем добавлять несколько фильтров
 
@@ -48,6 +52,7 @@ class MovieAdmin(admin.ModelAdmin):
     # fields = ['name', 'rating',] # для настройки видимости полей в единичной записи таблицы
     exclude = ('id', ) # для настройки исключенных полей из единичной записи таблицы
     readonly_fields = ('id', ) # запрещает редактировать, но только при открытии соло записи
+    filter_horizontal = ('actors',) # для более удобного отображения записи(сей)
 
 
 

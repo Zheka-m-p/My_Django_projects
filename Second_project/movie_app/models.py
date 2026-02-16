@@ -15,6 +15,30 @@ class Producer(models.Model):
         verbose_name_plural = 'Режиссёры'
 
 
+class Actor(models.Model):
+    MALE = 'M'
+    FEMALE = 'F'
+
+    GENDERS = [
+        (MALE, 'Мужчина'),
+        (FEMALE, 'Женщина'),
+    ]
+
+    first_name = models.CharField(max_length=100, verbose_name='имя')
+    last_name = models.CharField(max_length=100, verbose_name='фамилия')
+    gender = models.CharField(max_length=1, verbose_name='пол', choices=GENDERS, default=MALE)
+
+    def __str__(self):
+        gender = 'Актриса'
+        if self.gender == self.MALE:
+            gender = 'Актер'
+        return f'{gender} {self.first_name} {self.last_name}'
+
+    class Meta:
+        verbose_name = 'Актер'
+        verbose_name_plural = 'Актеры'
+
+
 class Movie(models.Model):
     EURO = 'EURO'
     DOLLAR = 'DOLLAR'
@@ -32,8 +56,9 @@ class Movie(models.Model):
     year = models.IntegerField(verbose_name='год выпуска', null=True)
     budget = models.IntegerField(verbose_name='бюджет фильма', default=1000000)
     currency = models.CharField(max_length=6, verbose_name='валюта', choices=VALUTE_CHOICES, default=DOLLAR)
-
-    producer = models.ForeignKey(Producer, on_delete=models.CASCADE, null=True) # для связи с другой таблицей
+    # для связи с другими таблицами: one to many, many to many
+    producer = models.ForeignKey(Producer, on_delete=models.CASCADE, null=True, verbose_name='Режиссер')
+    actors = models.ManyToManyField(Actor, 'Актёры')
 
     def get_absolute_url(self):
         '''Для получения ссылки на наш одиночный фильм'''
