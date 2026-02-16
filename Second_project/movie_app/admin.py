@@ -35,19 +35,19 @@ class RatingMovieFilter(admin.SimpleListFilter):
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     # Настройки для всех записей
-    list_display = ('name', 'rating', 'year', 'budget', 'currency','rating_status')  # добавляем нужные нам колонки для отображения на сайте
+    list_display = ('name', 'rating', 'year', 'producer', 'rating_status')  # добавляем нужные нам колонки для отображения на сайте
     search_fields = ('name', 'year',)  # добавляем поле поиска по данным колонкам
     list_filter = ('budget', 'currency', RatingMovieFilter)  # добавляем фильтр по данной колонке, можем добавлять несколько фильтров
 
-    list_editable = ( 'rating', 'year', 'budget', 'currency',) # чтобы изменять на месте, не переходя на конкретный фильм
+    list_editable = ( 'rating', 'year', 'producer') #, 'budget', 'currency',) # чтобы изменять на месте, не переходя на конкретный фильм
     # ordering = ('name', ) # сортировать по имени фильма
     # list_per_page = 3 # пагинация - по 3 фильма на странице
     actions = ('set_dollars', 'set_euro', ) # действия новые для записей
 
     # Настройки единочной записи таблице, в одтельном окне
     # fields = ['name', 'rating',] # для настройки видимости полей в единичной записи таблицы
-    exclude = ('budget', ) # для настройки исключенных полей из единичной записи таблицы
-    readonly_fields = ('year', ) # запрещает редактировать, но только при открытии соло записи
+    exclude = ('id', ) # для настройки исключенных полей из единичной записи таблицы
+    readonly_fields = ('id', ) # запрещает редактировать, но только при открытии соло записи
 
 
 

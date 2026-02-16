@@ -33,6 +33,8 @@ class Movie(models.Model):
     budget = models.IntegerField(verbose_name='бюджет фильма', default=1000000)
     currency = models.CharField(max_length=6, verbose_name='валюта', choices=VALUTE_CHOICES, default=DOLLAR)
 
+    producer = models.ForeignKey(Producer, on_delete=models.CASCADE, null=True) # для связи с другой таблицей
+
     def get_absolute_url(self):
         '''Для получения ссылки на наш одиночный фильм'''
         return reverse('movie:solo_movie', args=[self.id])
