@@ -1,8 +1,13 @@
 from django.contrib import admin, messages
-from . models import Movie
+from . models import Movie, Producer
 from django.db.models import QuerySet
 
 # Register your models here.
+@admin.register(Producer)
+class ProducerAdmin(admin.ModelAdmin):
+    pass
+
+
 class RatingMovieFilter(admin.SimpleListFilter):
     title = 'Рейтинг:'
     parameter_name = 'rating'
@@ -42,7 +47,7 @@ class MovieAdmin(admin.ModelAdmin):
     # Настройки единочной записи таблице, в одтельном окне
     # fields = ['name', 'rating',] # для настройки видимости полей в единичной записи таблицы
     exclude = ('budget', ) # для настройки исключенных полей из единичной записи таблицы
-    readonly_fields = ('year', ) # запрещает редактировать, но только при открытие соло записи
+    readonly_fields = ('year', ) # запрещает редактировать, но только при открытии соло записи
 
 
 

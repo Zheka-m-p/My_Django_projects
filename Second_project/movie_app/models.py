@@ -2,6 +2,19 @@ from django.db import models
 from django.urls import reverse # полезная штука, но вечно забываю...
 
 # Create your models here.
+class Producer(models.Model):
+    first_name = models.CharField(max_length=100, verbose_name='имя')
+    last_name = models.CharField(max_length=100, verbose_name='фамилия')
+    producer_email = models.EmailField(max_length=50, verbose_name='email')
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
+    class Meta:
+        verbose_name = 'Режиссёр'
+        verbose_name_plural = 'Режиссёры'
+
+
 class Movie(models.Model):
     EURO = 'EURO'
     DOLLAR = 'DOLLAR'
