@@ -7,7 +7,7 @@
     <h2 style="color: #333;">{{ movie.name }}</h2>
 
     <div style="margin-top: 15px; background-color: yellow;">
-        <p><strong>Рейтинг:</strong> {{ movie.rating }}%</p>
+        <p><strong>Рейтинг:</strong> {{ movie.rating }}</p>
         <p><strong>Год выпуска:</strong> {{ movie.year|default:"Не указан" }}</p>
         <p><strong>Бюджет:</strong> {{ movie.budget|floatformat:0 }}$</p>
     </div>
