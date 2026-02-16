@@ -25,7 +25,7 @@ class Movie(models.Model):
         return reverse('movie:solo_movie', args=[self.id])
 
     def __str__(self):
-        return f'{self.name} - {self.rating}%'
+        return f'{self.name}: рейтинг - {self.rating}'
 
 
     class Meta:  # ← Это внутренний класс Meta
