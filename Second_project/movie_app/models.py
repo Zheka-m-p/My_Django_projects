@@ -27,6 +27,7 @@ class Movie(models.Model):
     def __str__(self):
         return f'{self.name} - {self.rating}%'
 
+
     class Meta:  # ← Это внутренний класс Meta
         verbose_name = 'Фильм'
         verbose_name_plural = 'Фильмы'
