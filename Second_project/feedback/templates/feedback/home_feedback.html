@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Домашняя форма</title>
 </head>
 <body>
     <h2>Оставьте отзыв</h2>
     <form action="/" method="post">
          {% csrf_token %}
+        {% if got_error %}
+            <p>Имя не должно быть пустым</p>
+        {% endif %}
         <label for="name_id">Имя:</label>
         <input type="text" id="name_id" name="name"><br>
         <br>
@@ -17,14 +20,6 @@
         <label for="feedback_id">Отзыв:</label>
         <textarea name="feedback" id="feedback_id" cols="30" rows="5"></textarea><br>
         <br>
-        <input type="radio" id="html" name="fav_language" value="HTML">
-        <label for="html">HTML</label><br>
-        <input type="radio" id="css" name="fav_language" value="CSS">
-        <label for="css">CSS</label><br>
-        <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-        <label for="javascript">JavaScript</label>
-        <br>
-
                 <button>Отправить</button>
 
     </form>
