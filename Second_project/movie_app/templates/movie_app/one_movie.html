@@ -3,17 +3,32 @@
 {% block title %}{{ movie.name }}{% endblock %}
 
 {% block body %}
+<a href="{% url 'movie:all_movies' %}" style="color: #007bff; text-decoration: none;">← Назад к списку фильмов</a>
+
 <div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-    <h2 style="color: #333;">{{ movie.name }}</h2>
+    <h2 style="color: #333; text-align: center;">{{ movie.name }}</h2>
 
-    <div style="margin-top: 15px; background-color: yellow;">
-        <p><strong>Рейтинг:</strong> {{ movie.rating }}</p>
+    <div style="margin-top: 15px; background-color: #f9f9f9; padding: 15px; border-radius: 5px;">
+        <p><strong>Рейтинг:</strong> {{ movie.rating }}%</p>
         <p><strong>Год выпуска:</strong> {{ movie.year|default:"Не указан" }}</p>
-        <p><strong>Бюджет:</strong> {{ movie.budget|floatformat:0 }}$</p>
+        <p><strong>Бюджет:</strong> {{ movie.budget|floatformat:0 }} {{ movie.currency }}</p>
+        <p><strong>Режиссер:</strong>
+            <a href="{% url 'movie:solo_producer' movie.producer.id %}" style="color: #007bff; text-decoration: none;">
+                {{ movie.producer.first_name|default:"Неизвестно" }}
+                {{ movie.producer.last_name|default:"" }}
+            </a>
+        </p>
+
+        <p><strong>Актеры:</strong>
+        {% if movie.actors.all %}
+            {% for actor in movie.actors.all %}
+            <a href="{% url 'movie:solo_actor' actor.id %}" style="color: #007bff; text-decoration: none;">
+            {{ actor.first_name }} {{ actor.last_name }}{% if not forloop.last %}, {% endif %}</a>
+            {% endfor %}
+        {% else %}
+            скоро узнаете 😊
+        {% endif %}
+        </p>
     </div>
-
-    <hr style="margin: 20px 0;">
-
-    <a href="{% url 'movie:all_movies' %}" style="color: #007bff; text-decoration: none;">← Назад к списку фильмов</a>
 </div>
 {% endblock %}

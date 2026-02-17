@@ -1,0 +1,12 @@
+{% extends 'movie_app/base_movie.html' %}
+
+{% block title %}Главная — Фильмы{% endblock %}
+
+{% block body %}
+    {% include 'movie_app/include/navbar.html' %}  <!-- ← подключаем навбар -->
+
+    <div style="text-align: center; padding: 50px;">
+        <h1>🎬 Добро пожаловать в мир кино! 🎬</h1>
+        <p>Здесь вы найдёте лучшие фильмы, актёров и режиссёров.</p>
+    </div>
+{% endblock %}

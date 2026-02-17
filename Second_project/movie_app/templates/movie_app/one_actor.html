@@ -1,0 +1,31 @@
+{% extends 'movie_app/base_movie.html' %}
+
+{% block title %}{{ actor.first_name }} {{ actor.last_name }}{% endblock %}
+
+{% block body %}
+<a href="{% url 'movie:all_actors' %}" style="color: #007bff; text-decoration: none;">← Назад к списку актёров</a>
+
+<div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+    <h2 style="color: #333; text-align: center;">{{ actor.first_name }} {{ actor.last_name }}</h2>
+
+    <div style="margin-top: 15px; background-color: #f9f9f9; padding: 15px; border-radius: 5px;">
+        <p><strong>Пол:</strong> {{ actor.get_gender_display }}</p>
+
+        <h3>Фильмы:</h3>
+        {% if movies %}
+            <ul>
+            {% for movie in movies %}
+                <li>
+                    <a href="{% url 'movie:solo_movie' movie.id %}" style="color: #007bff; text-decoration: none;">
+                        {{ movie.name }} ({{ movie.year|default:"—" }})
+                    </a>
+                    — Рейтинг: {{ movie.rating }}%
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Фильмов пока нет 🎬</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -3,6 +3,8 @@
 {% block title %} Все фильмы {% endblock %}
 
 {% block body %}
+<a href="{% url 'movie:movie_app_home_page' %}">← На главную</a>  <!-- ← ссылка назад -->
+
 <div style="max-width: 800px; margin: 20px auto; padding: 20px;">
     <h2 style="text-align: center; color: #333;">Список всех фильмов</h2>
 
@@ -16,6 +18,8 @@
             </h3>
             <p style="margin: 8px 0; color: #555;">
                 Рейтинг: <strong>{{ movie.rating }}%</strong>,
+                Режиссер: <strong>{{ movie.producer.first_name|default:"Не известно" }}
+                {{ movie.producer.last_name|default:"" }}</strong>,  <!-- ← добавлен default -->
                 Год: <strong>{{ movie.year|default:"неизвестен" }}</strong>,
                 Бюджет: <strong>{{ movie.budget|default:"оч много)" }}</strong>
             </p>

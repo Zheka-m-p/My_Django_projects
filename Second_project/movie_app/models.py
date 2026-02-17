@@ -32,7 +32,7 @@ class Actor(models.Model):
         gender = 'Актриса'
         if self.gender == self.MALE:
             gender = 'Актер'
-        return f'{gender} {self.first_name} {self.last_name}'
+        return f'{gender}: {self.first_name} {self.last_name}'
 
     class Meta:
         verbose_name = 'Актер'

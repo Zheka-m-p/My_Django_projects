@@ -1,0 +1,28 @@
+{% extends 'movie_app/base_movie.html' %}
+
+{% block title %}Все актёры{% endblock %}
+
+{% block body %}
+<a href="{% url 'movie:movie_app_home_page' %}">← На главную</a>
+
+<div style="max-width: 800px; margin: 20px auto; padding: 20px;">
+    <h2 style="text-align: center; color: #333;">Все актёры</h2>
+
+    <div style="display: grid; gap: 15px;">
+        {% for actor in actors %}
+        <div style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+            <h3 style="margin: 0; color: #007bff;">
+                <a href="{% url 'movie:solo_actor' actor.id %}" style="text-decoration: none;">
+                    {{ actor.first_name }} {{ actor.last_name }}
+                </a>
+            </h3>
+            <p style="margin: 8px 0; color: #555;">
+                Пол: <strong>{{ actor.get_gender_display }}</strong>
+            </p>
+        </div>
+        {% empty %}
+        <p style="text-align: center; color: #999;">Актёров пока нет.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
