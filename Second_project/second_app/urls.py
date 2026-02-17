@@ -23,6 +23,8 @@ admin.site.site_header = 'Наша админка'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('horoscope/', include('horoscope.urls', namespace='horoscope')),
-    path('', include('movie_app.urls', namespace='movie')),
+
+    path('', include('feedback.urls', namespace='feedback')),
+    path('movie_app/', include('movie_app.urls', namespace='movie')),
 
 ]

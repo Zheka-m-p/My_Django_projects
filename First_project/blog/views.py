@@ -8,7 +8,7 @@ def index(request):
         'categories_list': categories_list,
     }
 
-    return render(request, 'blog/index.html', context)
+    return render(request, 'blog/home_feedback.html', context)
 
 
 def category_page(request, pk, slug):
