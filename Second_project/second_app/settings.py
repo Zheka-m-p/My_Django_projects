@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'horoscope',
     'movie_app',
     'feedback',
+    'blog',
 
 ]
 
