@@ -7,7 +7,6 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
 # @login_required
 def index(request):
     # 🔹 Проверяем, залогинен ли пользователь
@@ -15,20 +14,15 @@ def index(request):
         # Если нет — показываем страницу с alert и кнопкой "Войти"
         return render(request, 'feedback/need_login.html')
 
-    # 🔹 Проверяем, есть ли уже отзыв от этого пользователя
-    try:
-        feedback_exists = Feedback.objects.filter(user=request.user).exists()
-    except Feedback.DoesNotExist:
-        feedback_exists = False
+    # 🔹 Проверяем, есть ли уже отзыв от этого пользователя, так как .exists() возвращает False, если записей нет
+    feedback_exists = Feedback.objects.filter(user=request.user).exists()
 
-    if feedback_exists:
+    if feedback_exists: # если есть - показываем другой шаблон
         return render(request, 'feedback/already_submitted.html')
 
     if request.method == 'POST':
         form = FeedbackForm(request.POST) # сюда помещаем значения, которые пришли в пост-запросе
         if form.is_valid():
-            print("✅ Форма валидна")
-            print("Данные:", form.cleaned_data)
             feed = Feedback( # создаем объект - строку в таблице Feedback
                 user=request.user,  # ✅ Добави это! иначе форма не работала(. забыф
                 name=form.cleaned_data['name'],
@@ -36,13 +30,7 @@ def index(request):
                 feedback=form.cleaned_data['feedback'],
                 rating=form.cleaned_data['rating'],
             )
-
-            try:
-                feed.save() # сохраняем ее в базу данных
-                print("✅ Сохранено в БД!")
-            except Exception as e:
-                print("❌ Ошибка при сохранении:", e)
-                return render(request, 'feedback/home_feedback.html', {'form': form, 'error': str(e)})
+            feed.save() # сохраняем ее в базу данных
 
             return HttpResponseRedirect(reverse('feedback:done')) # при редиректе теряются данные
     else:
@@ -51,11 +39,3 @@ def index(request):
 
 def done(request):
     return render(request, 'feedback/done.html')
-
-
-# заглушка(уже лишняя)
-# def hello(request):
-#     res = request.GET # словарь
-#     print(res.get('name', 'кто ты?'))
-#     return HttpResponseRedirect(reverse('feedback:home')) # при редиректе теряются данные
-#     # return render(request, 'feedback/home_feedback.html')

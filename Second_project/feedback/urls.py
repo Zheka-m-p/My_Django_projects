@@ -7,6 +7,5 @@ app_name = 'feedback' # чисто название, может быть люб�
 urlpatterns = [
     path('done/', views.done, name='done'),
     path('', views.index, name='home'),
-    # path('hello/', views.hello, name='hello'),
 
 ]
