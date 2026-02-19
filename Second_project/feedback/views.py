@@ -15,12 +15,21 @@ def index(request):
         # Если нет — показываем страницу с alert и кнопкой "Войти"
         return render(request, 'feedback/need_login.html')
 
+    # 🔹 Проверяем, есть ли уже отзыв от этого пользователя
+    try:
+        feedback_exists = Feedback.objects.filter(user=request.user).exists()
+    except Feedback.DoesNotExist:
+        feedback_exists = False
+
+    if feedback_exists:
+        return render(request, 'feedback/already_submitted.html')
 
     if request.method == 'POST':
         form = FeedbackForm(request.POST) # сюда помещаем значения, которые пришли в пост-запросе
         if form.is_valid():
             print(form.cleaned_data) # очищенные данные
             feed = Feedback( # создаем объект - строку в таблице Feedback
+                user=request.user,  # ✅ Добави это! иначе форма не работала(. забыф
                 name=form.cleaned_data['name'],
                 surname=form.cleaned_data['surname'],
                 feedback=form.cleaned_data['feedback'],
@@ -34,6 +43,7 @@ def index(request):
 
 def done(request):
     return render(request, 'feedback/done.html')
+
 
 # заглушка(уже лишняя)
 def hello(request):
