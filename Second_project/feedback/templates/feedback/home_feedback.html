@@ -29,35 +29,65 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
         }
+        /* Стиль для неактивной формы */
+        .disabled-form * {
+            pointer-events: none;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body class="bg-light">
-
+    {% include 'main/includes/main_navbar.html' %}
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <!-- Классы card, shadow и p-4 создают ту самую рамку с тенью и отступами -->
                 <div class="card shadow-sm p-4">
-                    <h2 class="text-center mb-4">Оставьте отзыв</h2>
-                    <form action="/" method="post">
-                        {% csrf_token %}
-                        {% for field in form %}
-                        <div class="mb-3">
-                            {{ field.label_tag }}
-                            {{ field }}
-                            {% if field.errors %}
-                                <div class="text-danger small">{{ field.errors }}</div>
-                            {% endif %}
+                    {% if user.is_authenticated %}
+                        <h2 class="text-center mb-4">Оставьте отзыв</h2>
+                        <form action="/" method="post">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class="mb-3">
+                                {{ field.label_tag }}
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger small">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary">Отправить</button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <h2 class="text-center mb-4">Оставьте отзыв</h2>
+                        <!-- Форма, но неактивная -->
+                        <div class="disabled-form">
+                          <form>
+                              {% for field in form %}
+                              <div class="mb-3">
+                                  {{ field.label_tag }}
+                                  {{ field }}
+                                  {% if field.errors %}
+                                      <div class="text-danger small">{{ field.errors }}</div>
+                                  {% endif %}
+                              </div>
+                              {% endfor %}
+                          </form>
                         </div>
-                        {% endfor %}
-                        <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-primary">Отправить</button>
+                        <!-- Сообщение -->
+                        <div class="alert alert-info my-3">
+                            Чтобы отправить отзыв, необходимо войти в систему.
                         </div>
-                    </form>
+                        <!-- Кнопки -->
+                        <div class="d-grid gap-3">
+                            <a href="{% url 'users:register_user' %}" class="btn btn-primary">Зарегистрироваться</a>
+                            <a href="{% url 'main:main_page' %}" class="btn btn-outline-secondary">На главную</a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-
 </body>
 </html>

@@ -4,10 +4,17 @@ from . models import Feedback
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+# @login_required
 def index(request):
+    # 🔹 Проверяем, залогинен ли пользователь
+    if not request.user.is_authenticated:
+        # Если нет — показываем страницу с alert и кнопкой "Войти"
+        return render(request, 'feedback/need_login.html')
+
 
     if request.method == 'POST':
         form = FeedbackForm(request.POST) # сюда помещаем значения, которые пришли в пост-запросе
@@ -28,7 +35,7 @@ def index(request):
 def done(request):
     return render(request, 'feedback/done.html')
 
-
+# заглушка(уже лишняя)
 def hello(request):
     res = request.GET # словарь
     print(res.get('name', 'кто ты?'))

@@ -12,6 +12,18 @@
             max-width: 500px;
             margin: 0 auto;
         }
+        .hint-block {
+          display: none; /* по умолчанию скрыт */
+          margin-top: 1rem;
+          padding: 0.8rem;
+          background-color: #e7f3ff;
+          border: 1px solid #b8daff;
+          border-radius: 0.375rem;
+        }
+        /* 🔹 Выравнивание кнопок по высоте */
+        .btn-form {
+            height: calc(1.5em + 0.75rem + 2px); /* как у input */
+        }
     </style>
 </head>
 <body>
@@ -34,12 +46,33 @@
             <input type="password" name="{{ form.password2.name }}" class="form-control"/>
             {{ form.password2.errors }}
         </div>
-<!--        <div class="d-flex justify-content-between">-->
-            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-            <a href="/" class="btn btn-secondary">Назад</a>
-<!--        </div>-->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary btn-form">Зарегистрироваться</button>
+            <div>
+              <a href="{% url 'users:login_user' %}" class="btn btn-outline-secondary me-2 btn-form">Войти</a>
+              <a href="/" class="btn btn-secondary btn-form">Назад</a>
+            </div>
+        </div>
     </form>
+    <!-- Добавляем кнопку "Уже есть аккаунт?" -->
+    <div class="mt-3 text-center">
+      <button class="btn btn-link" onclick="toggleHint()">Уже есть аккаунт?</button>
+    </div>
+
+    <!-- Блок с подсказкой -->
+    <div id="hintBlock" class="hint-block">
+      <p>Если у вас уже есть аккаунт, нажмите <strong>"Войти"</strong> выше.</p>
+      <p>Войдя в систему, вы сможете оставлять отзывы и пользоваться другими возможностями сайта.</p>
+    </div>
 </div>
+
+<script>
+  function toggleHint() {
+    const hintBlock = document.getElementById('hintBlock');
+    // Показываем/скрываем блок
+    hintBlock.style.display = hintBlock.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
+
 </body>
-</html>
 </html>
