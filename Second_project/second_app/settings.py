@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'movie_app',
     'feedback',
     'blog',
+    'users',
+    'main',
 
 ]
 
@@ -65,7 +67,7 @@ ROOT_URLCONF = 'second_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [], # [BASE_DIR / "templates"], # если надо будет искать шаблоны в общей папке(не в приложениях)
+        'DIRS': [BASE_DIR / "templates"], # если надо будет искать шаблоны в общей папке(не только в приложениях)
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

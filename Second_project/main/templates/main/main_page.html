@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="text-center mb-5">Выберите приложение</h1>
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <a href="{% url 'horoscope:home_horoscope' %}" class="card text-decoration-none text-dark h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">🔮 Гороскоп</h5>
+                    <p class="card-text">Узнайте своё будущее</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <a href="{% url 'blog:all_posts' %}" class="card text-decoration-none text-dark h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📝 Блог</h5>
+                    <p class="card-text">Читайте и пишите посты</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <a href="{% url 'movie:movie_app_home_page' %}" class="card text-decoration-none text-dark h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">🎬 Фильмы</h5>
+                    <p class="card-text">Смотрите лучшие фильмы</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <a href="{% url 'feedback:home' %}" class="card text-decoration-none text-dark h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">💬 Обратная связь</h5>
+                    <p class="card-text">Напишите нам</p>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock %}
