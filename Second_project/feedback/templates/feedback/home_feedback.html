@@ -44,7 +44,7 @@
                 <div class="card shadow-sm p-4">
                     {% if user.is_authenticated %}
                         <h2 class="text-center mb-4">Оставьте отзыв</h2>
-                        <form action="/" method="post">
+                        <form method="post">
                             {% csrf_token %}
                             {% for field in form %}
                             <div class="mb-3">

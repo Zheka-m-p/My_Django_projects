@@ -6,4 +6,4 @@ from .urls import app_name
 # Register your models here.
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['id', 'user', 'name', 'surname',  'rating', ]

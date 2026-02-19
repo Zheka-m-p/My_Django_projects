@@ -27,7 +27,8 @@ def index(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST) # сюда помещаем значения, которые пришли в пост-запросе
         if form.is_valid():
-            print(form.cleaned_data) # очищенные данные
+            print("✅ Форма валидна")
+            print("Данные:", form.cleaned_data)
             feed = Feedback( # создаем объект - строку в таблице Feedback
                 user=request.user,  # ✅ Добави это! иначе форма не работала(. забыф
                 name=form.cleaned_data['name'],
@@ -35,7 +36,14 @@ def index(request):
                 feedback=form.cleaned_data['feedback'],
                 rating=form.cleaned_data['rating'],
             )
-            feed.save() # сохраняем ее в базу данных
+
+            try:
+                feed.save() # сохраняем ее в базу данных
+                print("✅ Сохранено в БД!")
+            except Exception as e:
+                print("❌ Ошибка при сохранении:", e)
+                return render(request, 'feedback/home_feedback.html', {'form': form, 'error': str(e)})
+
             return HttpResponseRedirect(reverse('feedback:done')) # при редиректе теряются данные
     else:
         form = FeedbackForm() #  а в этом случае форма будет пустая
@@ -46,8 +54,8 @@ def done(request):
 
 
 # заглушка(уже лишняя)
-def hello(request):
-    res = request.GET # словарь
-    print(res.get('name', 'кто ты?'))
-    return HttpResponseRedirect(reverse('feedback:home')) # при редиректе теряются данные
-    # return render(request, 'feedback/home_feedback.html')
+# def hello(request):
+#     res = request.GET # словарь
+#     print(res.get('name', 'кто ты?'))
+#     return HttpResponseRedirect(reverse('feedback:home')) # при редиректе теряются данные
+#     # return render(request, 'feedback/home_feedback.html')
