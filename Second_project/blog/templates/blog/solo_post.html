@@ -15,16 +15,26 @@
     </style>
 </head>
 <body>
+{% include 'main/includes/main_navbar.html' %}
 <div class="container mt-5">
     <div class="card">
         <div class="card-body">
             <h1 class="card-title">{{ post.title }}</h1>
             <p class="card-text">{{ post.content|linebreaks }}</p>
             <small class="text-muted">Автор: {{ post.author }}, {{ post.created_at|date:"j E Y г. H:i" }}
-                <a href="{% url 'blog:update_post' post.pk %}">редактировать</a> |
-                <a href="{% url 'blog:delete_post' post.pk %}">удалить</a> |
-                <a href="{% url 'blog:all_post_by_one_author' post.author.pk %}">все посты автора</a> |
-                <a href="{% url 'blog:all_posts' %}">все посты</a>
+
+                {# ✅ ПРОВЕРКА: Если смотрит автор поста #}
+                {% if user == post.author %}
+                    <a href="{% url 'blog:update_post' post.pk %}">редактировать</a> |
+                    <a href="{% url 'blog:delete_post' post.pk %}">удалить</a> |
+                    {# ✅ Текст для автора #}
+                    <a href="{% url 'blog:all_post_by_one_author' post.author.pk %}">все мои публикации</a> |
+                {% else %}
+                    {# ✅ Текст для всех остальных #}
+                    <a href="{% url 'blog:all_post_by_one_author' post.author.pk %}">все публикации автора</a> |
+                {% endif %}
+
+                <a href="{% url 'blog:all_posts' %}">все публикации</a>
             </small>
         </div>
     </div>
