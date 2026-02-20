@@ -74,9 +74,20 @@ class PostListViewByOneAuthor(ListView):
     context_object_name = 'posts'
     ordering = ['-updated_at']
 
+
     def get_queryset(self):
         author_id = self.kwargs['pk']  # ← id автора из URL
-        return Post.objects.filter(author_id=author_id)
+        queryset = Post.objects.filter(author_id=author_id)
+
+        title = self.request.GET.get('title') # 🔹 фильтрация по названию и автору
+        author = self.request.GET.get('author')
+
+        if title:
+            queryset = queryset.filter(title__icontains=title)
+        if author:
+            queryset = queryset.filter(author__username__icontains=author)
+
+        return queryset
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):

@@ -12,6 +12,7 @@
             background-color: #e9ecef;
             border: 1px solid #b0c4de;
         }
+        a {text-decoration: none;}
     </style>
 </head>
 <body>
@@ -21,25 +22,7 @@
     <a href="{% url 'blog:home' %}" class="btn btn-outline-secondary">← На главную</a>
 </div>
 <div class="container mt-4">
-    <!-- 🔹 Форма поиска -->
-    <form method="GET" class="mb-4">
-        <div class="row g-3">
-            <div class="col-md-4">
-                <input type="text" name="title" class="form-control" placeholder="Поиск по названию..." value="{{ request.GET.title }}">
-            </div>
-            <div class="col-md-4">
-                <input type="text" name="author" class="form-control" placeholder="Поиск по автору..." value="{{ request.GET.author }}">
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">Найти</button>
-            </div>
-            <div class="col-md-2">
-                <!-- 🔹 Кнопка "Сбросить" -->
-                <a href="{% url 'blog:all_posts' %}" class="btn btn-outline-secondary w-100">Сбросить</a>
-            </div>
-        </div>
-    </form>
-
+    {% include 'blog/includes/search_form.html' %}
     <h1 class="mb-4">все публикации:</h1>
     {% for post in posts %}
     <div class="card mb-3">
