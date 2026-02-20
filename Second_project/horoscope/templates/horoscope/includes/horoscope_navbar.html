@@ -1,11 +1,20 @@
-<nav class="navbar">
+<nav class="navbar-horoscope">
   <div class="nav-container">
-    <a href="{% url 'horoscope:home_horoscope' %}" class="nav-link active">Все знаки</a>
+    <!-- Автоматическая подсветка активной ссылки -->
+    <a href="{% url 'horoscope:home_horoscope' %}"
+       class="nav-link {% if request.resolver_match.url_name == 'home_horoscope' %}active{% endif %}">
+       Все знаки
+    </a>
+
     <span class="nav-separator">|</span>
-    <a href="{% url 'horoscope:types_element_zodiac' %}" class="nav-link">Типы стихий</a>
+
+    <a href="{% url 'horoscope:types_element_zodiac' %}"
+       class="nav-link {% if 'type' in request.path %}active{% endif %}">
+       Типы стихий
+    </a>
+
     <span class="nav-separator">|</span>
-    <a href="https://puzzle-english.com/directory/zodiac-sign" class="nav-link" target="_blank">Источник</a>
+
+    <a href="https://puzzle-english.com" class="nav-link" target="_blank">Источник</a>
   </div>
 </nav>
-
-

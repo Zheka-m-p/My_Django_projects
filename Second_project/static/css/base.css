@@ -1,17 +1,26 @@
 /* base.css */
-html {
-  background: linear-gradient(135deg, #3199dc, #2a7ab9);
+
+/* 1. Фон страницы (ультимативно) */
+body {
+  background: linear-gradient(135deg, #3199dc, #2a7ab9) !important;
+  background-attachment: fixed !important;
+  min-height: 100vh;
+  margin: 0;
   color: #333;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.navbar {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 0.8rem 0;
+/* 2. ИЗОЛЯЦИЯ: Стили ниже будут работать ТОЛЬКО для навбара гороскопа */
+.navbar-horoscope {
+  background: rgba(255, 255, 255, 0.9) !important;
+  padding: 0.6rem 0;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+  display: block; /* Убеждаемся, что это отдельный блок */
 }
 
-.nav-container {
+/* Контейнер только внутри гороскопа */
+.navbar-horoscope .nav-container {
   max-width: 800px;
   margin: 0 auto;
   display: flex;
@@ -20,28 +29,41 @@ html {
   gap: 1.2rem;
 }
 
-.nav-link {
+/* Ссылки только внутри гороскопа (теперь не тронут "все приложения") */
+.navbar-horoscope .nav-link {
   text-decoration: none;
-  color: #444;
+  color: #444 !important;
   font-weight: 600;
   padding: 0.4rem 0.8rem;
   border-radius: 4px;
   transition: all 0.3s ease;
+  background: transparent; /* Убираем белый фон, который вылез на скрине */
+  box-shadow: none;
 }
 
-.nav-link:hover {
-  color: #eca8b5;
+.navbar-horoscope .nav-link:hover {
+  color: #eca8b5 !important;
   background: #f8f8f8;
 }
 
-.nav-link.active {
-  color: #eca8b5;
+/* Активная ссылка только для гороскопа */
+.navbar-horoscope .nav-link.active {
+  color: #eca8b5 !important;
   font-weight: 700;
-  background: #fff;
+  background: #fff !important;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.nav-separator {
+/* Разделитель только для гороскопа */
+.navbar-horoscope .nav-separator {
   color: #ccc;
   font-size: 1.2rem;
+}
+
+/* 3. Фикс для главного навбара (чтобы текст был виден на синем) */
+.navbar-dark .navbar-brand {
+  color: #fff !important;
+  background: transparent !important; /* Убираем белую подложку */
+  box-shadow: none !important;
+  padding: 0.5rem 1rem;
 }
