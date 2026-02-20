@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>все посты автора</title>
+    <title>все публикации автора</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -17,17 +17,35 @@
 <body>
 {% include 'main/includes/main_navbar.html' %}
 <div class="container mt-5">
-    <h1 class="mb-4">все посты автора</h1>
-    {% for post in posts %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <h2 class="card-title">{{ post.title }}</h2>
-                <p class="card-text">{{ post.content|truncatewords:20 }}</p>
-                <small class="text-muted">Автор: {{ post.author }}, {{ post.created_at|date:"j E Y г. H:i" }}
-                <a href="{% url 'blog:solo_post' post.pk %}">Подробнее...</a></small>
+    <!-- 🔹 Заголовок и сообщение зависит от наличия постов -->
+    {% if posts %}
+        <h1 class="mb-4">
+            {% if user.is_authenticated and posts.0.author == user %}
+                все мои публикации | <a href="{% url 'blog:create_post' %}">написать новую</a>
+            {% else %}
+                все публикации автора
+            {% endif %}
+        </h1>
+        {% for post in posts %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+                    <small class="text-muted">Автор: {{ post.author }}, {{ post.created_at|date:"j E Y г. H:i" }}
+                    <a href="{% url 'blog:solo_post' post.pk %}">Подробнее...</a></small>
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <!-- 🔹 Сообщение, если постов нет -->
+        <h1 class="mb-4">
+            {% if user.is_authenticated and request.resolver_match.kwargs.pk == user.pk %}
+                еще нет публикаций, <a href="{% url 'blog:create_post' %}">написать</a>
+            {% else %}
+                у этого автора еще нет публикаций
+            {% endif %}
+        </h1>
+    {% endif %}
 </div>
 </body>
 </html>

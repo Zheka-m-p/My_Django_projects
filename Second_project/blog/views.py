@@ -18,6 +18,19 @@ class PostListView(ListView):
     context_object_name = 'posts' # имя переменной для шаблонов (все посты - список)
     ordering = ['-created_at']
 
+    def get_queryset(self): # для фильтрации данных по названию и username автора
+        queryset = super().get_queryset()
+
+        title = self.request.GET.get('title')
+        author = self.request.GET.get('author')
+
+        if title:
+            queryset = queryset.filter(title__icontains=title)
+        if author:
+            queryset = queryset.filter(author__username__icontains=author)
+
+        return queryset
+
 
 class PostDetailView(DetailView):
     model = Post
