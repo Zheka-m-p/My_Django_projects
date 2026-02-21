@@ -121,8 +121,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        # После отправки возвращаем юзера на страницу того же поста
-        return reverse_lazy('blog:solo_post', kwargs={'pk': self.kwargs['pk']})
+        return f"{reverse('blog:solo_post', kwargs={'pk': self.kwargs['pk']})}#comments-section"
 
 
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
@@ -139,8 +138,7 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
         raise PermissionDenied("Нельзя удалять чужие комментарии!")
 
     def get_success_url(self):
-        # После удаления возвращаемся на страницу поста
-        return reverse_lazy('blog:solo_post', kwargs={'pk': self.object.post.pk})
+        return f"{reverse('blog:solo_post', kwargs={'pk': self.object.post.pk})}#comments-section"
 
 
 class CommentUpdateView(LoginRequiredMixin, UpdateView):
@@ -155,4 +153,6 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse_lazy('blog:solo_post', kwargs={'pk': self.object.post.pk})
+        return f"{reverse('blog:solo_post', kwargs={'pk': self.object.post.pk})}#comment-{self.object.pk}"
+
+

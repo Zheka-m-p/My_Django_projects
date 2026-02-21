@@ -39,10 +39,12 @@
 
 <div class="container mt-5 mb-5">
     <hr>
-    <h3>Комментарии ({{ post.comment_set.count }}):</h3>
+    <!-- ✅ ДОБАВИЛ id="comments-section" (для возврата при удалении) -->
+    <h3 id="comments-section">Комментарии ({{ post.comment_set.count }}):</h3>
 
     {% for comment in post.comment_set.all %}
-        <div class="card mb-3 shadow-sm">
+        <!-- ✅ ДОБАВИЛ id="comment-{{ comment.pk }}" (для возврата при сохранении) -->
+        <div class="card mb-3 shadow-sm" id="comment-{{ comment.pk }}">
             <div class="card-body position-relative">
 
                 <!-- ✅ ВЫПАДАЮЩЕЕ МЕНЮ (Шестеренка) -->
