@@ -129,7 +129,7 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
     '''Вьюха для УДАЛЕНИЯ комментария'''
     model = Comment
     # Можно использовать твой готовый шаблон для удаления
-    template_name = 'blog/delete_post.html'
+    # template_name = 'blog/delete_post.html' # уже не надо. т.к. не будет каждый раз переходить
 
     def dispatch(self, request, *args, **kwargs):
         comment = self.get_object()
@@ -140,4 +140,19 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         # После удаления возвращаемся на страницу поста
+        return reverse_lazy('blog:solo_post', kwargs={'pk': self.object.post.pk})
+
+
+class CommentUpdateView(LoginRequiredMixin, UpdateView):
+    '''Редактирование комментов на месте'''
+    model = Comment
+    form_class = CommentForm
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.author != request.user:
+            raise PermissionDenied("Это не ваш комментарий.")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
         return reverse_lazy('blog:solo_post', kwargs={'pk': self.object.post.pk})
