@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
-from . models import Post, Comment
+from . models import Post, Comment, Like
 from . forms import CommentForm
 from django.urls import reverse, reverse_lazy
 
 from django.contrib.auth.mixins import LoginRequiredMixin # 🔹 Импортируем миксин и ниже ошибку
 from django.core.exceptions import PermissionDenied
+
+from django.http import JsonResponse
+from django.db.models import Count, Q
 
 
 # Create your views here.
@@ -40,9 +43,12 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Добавляем пустую форму в контекст, чтобы вывести её в шаблоне
-        context['comment_form'] = CommentForm()
+        # 🔹 Считаем лайки и дизлайки отдельно через фильтр базы данных
+        context['likes_count'] = self.object.like_set.filter(is_like=True).count()
+        context['dislikes_count'] = self.object.like_set.filter(is_like=False).count()
+        context['comment_form'] = CommentForm()  # Добавляем пустую форму в контекст, чтобы вывести её в шаблоне
         return context
+
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
@@ -156,3 +162,40 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
         return f"{reverse('blog:solo_post', kwargs={'pk': self.object.post.pk})}#comment-{self.object.pk}"
 
 
+
+def like_post(request, pk):
+    '''Вьюха для проставления лайков или дизлайков'''
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Войдите, чтобы ставить оценки'}, status=403)
+
+    post = get_object_or_404(Post, pk=pk)
+    action = request.GET.get('action') # получаем 'like' или 'dislike'
+    is_like = action == 'like'
+
+    # Ищем, ставил ли юзер уже что-то этому посту
+    existing_like = Like.objects.filter(user=request.user, post=post).first()
+
+    if existing_like:
+        if existing_like.is_like == is_like:
+            existing_like.delete() # Если нажал на ту же кнопку второй раз — удаляем оценку
+        else:
+            existing_like.is_like = is_like  # Если нажал на противоположную — меняем лайк на дизлайк
+            existing_like.save()
+    else:
+        Like.objects.create(user=request.user, post=post, is_like=is_like)  # Если оценок еще нет — создаем
+
+    likes = post.like_set.filter(is_like=True).count() # считаем текущее кол-во
+    dislikes = post.like_set.filter(is_like=False).count()
+
+    return JsonResponse({
+        'likes': likes,
+        'dislikes': dislikes,
+        'user_choice': is_like if Like.objects.filter(user=request.user, post=post).exists() else None
+    })
+
+
+
+
+# чисто, если вдруг сломается бустрап, чтоб быстро найти
+#  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> (в начало)
+# <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> (в конец)

@@ -19,6 +19,9 @@ urlpatterns = [
     path('comment/<int:pk>/delete/', views.CommentDeleteView.as_view(), name='delete_comment'),
     # для редактирования коммента
     path('comment/<int:pk>/update/', views.CommentUpdateView.as_view(), name='update_comment'),
+    # для лайков/дизлайков
+    path('post/<int:pk>/like/', views.like_post, name='like_post'),
+
 
 
 ]
