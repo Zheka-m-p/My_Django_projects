@@ -44,6 +44,10 @@
                     <p class="card-text">{{ post.content|truncatewords:20 }}</p>
                     <small class="text-muted">Автор: {{ post.author }}, {{ post.created_at|date:"j E Y г. H:i" }}
                     <a href="{% url 'blog:solo_post' post.pk %}">Подробнее...</a></small>
+                    <div class="mt-2">
+                        <span class="text-success me-2">👍 {{ post.likes_count }}</span>
+                        <span class="text-danger">👎 {{ post.dislikes_count }}</span>
+                    </div>
                 </div>
             </div>
         {% endfor %}

@@ -28,6 +28,7 @@
     <div class="card mb-3">
         <div class="card-body">
             <h2 class="card-title">{{ post.title }}</h2>
+
             <p class="card-text">{{ post.content|truncatewords:20 }}</p>
             <small class="text-muted">Автор: {{ post.author }}, {{ post.created_at|date:"j E Y г. H:i" }}
                 <a href="{% url 'blog:solo_post' post.pk %}">Подробнее...</a> |
@@ -39,6 +40,10 @@
                     <a href="{% url 'blog:all_post_by_one_author' post.author.pk %}">все публикации автора</a>
                 {% endif %}
             </small>
+            <div class="mt-2">
+                <span class="text-success me-2">👍 {{ post.likes_count }}</span>
+                <span class="text-danger">👎 {{ post.dislikes_count }}</span>
+            </div>
         </div>
     </div>
     {% endfor %}

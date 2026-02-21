@@ -17,6 +17,7 @@ def index(request):
 
 
 class PostListView(ListView):
+    '''Класс для всех, вообще всех, постов'''
     model = Post
     template_name = 'blog/all_posts.html'
     context_object_name = 'posts' # имя переменной для шаблонов (все посты - список)
@@ -24,6 +25,12 @@ class PostListView(ListView):
 
     def get_queryset(self): # для фильтрации данных по названию и username автора
         queryset = super().get_queryset()
+
+        # здесь добавляем счетчики к каждому объекту в списке постов
+        queryset = queryset.annotate(
+            likes_count=Count('like', filter=Q(like__is_like=True)),
+            dislikes_count=Count('like', filter=Q(like__is_like=False))
+        )
 
         title = self.request.GET.get('title')
         author = self.request.GET.get('author')
@@ -90,7 +97,13 @@ class PostListViewByOneAuthor(ListView):
 
     def get_queryset(self):
         author_id = self.kwargs['pk']  # ← id автора из URL
-        queryset = Post.objects.filter(author_id=author_id)
+        # queryset = Post.objects.filter(author_id=author_id)
+
+        # Тоже добавляем аннотацию для подсчета
+        queryset = Post.objects.filter(author_id=author_id).annotate(
+            likes_count=Count('like', filter=Q(like__is_like=True)),
+            dislikes_count=Count('like', filter=Q(like__is_like=False))
+        )
 
         title = self.request.GET.get('title') # 🔹 фильтрация по названию и автору
         author = self.request.GET.get('author')
