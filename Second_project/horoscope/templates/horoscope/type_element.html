@@ -1,5 +1,6 @@
 {% extends 'horoscope/base_horoscope.html' %}
 {% load static %}
+{% load zodiac_filters %}
 
 {% block css_update %}
 <link rel="stylesheet" href="{% static 'horoscope/css/type_element.css' %}">
@@ -11,7 +12,8 @@
 {% block body %}
     <ul>
         {% for elem in data %}
-            <li><a href="{% url 'horoscope:sign_zodiac' elem.name %}">{{elem.name}}</a></li>
+            <li><a href="{% url 'horoscope:sign_zodiac' elem.name %}">
+                {{elem.name}} {{ elem.name | zodiac_icon }}</a></li>
         {% endfor %}
     </ul>
 {% endblock body %}

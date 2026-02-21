@@ -91,7 +91,7 @@
         </div>
     {% else %}
         <div class="alert alert-info">
-            <a href="{% url 'login' %}">Войдите</a>, чтобы оставить комментарий.
+            <a href="{% url 'users:login_user' %}?next={{ request.path }}">Войдите</a>, чтобы оставить комментарий.
         </div>
     {% endif %}
 </div>

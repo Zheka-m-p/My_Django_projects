@@ -139,3 +139,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/users/login_user/'  # путь к логину (для перенаправления на вход )
+
+LOGIN_REDIRECT_URL = 'main:main_page'  # Куда идти после логина, если параметр next пустой
+LOGOUT_REDIRECT_URL = 'main:main_page' # Куда идти после выхода, если параметр next пустой

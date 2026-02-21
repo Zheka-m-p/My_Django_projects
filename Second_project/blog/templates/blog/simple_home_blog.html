@@ -42,7 +42,7 @@
                 </a>
             {% else %}
                 {# ✅ ДОБАВИЛ: Для анонимов можно добавить подсказку #}
-                <a href="{% url 'users:login_user' %}" class="btn btn-outline-primary btn-lg px-4">
+                <a href="{% url 'users:login_user' %}?next={{ request.path }}" class="btn btn-outline-primary btn-lg px-4">
                     Войти, чтобы писать
                 </a>
             {% endif %}

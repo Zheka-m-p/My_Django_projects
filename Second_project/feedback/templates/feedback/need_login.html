@@ -13,27 +13,27 @@
                 <div class="card text-center shadow-sm p-4">
                     <h2 class="text-warning">Внимание!</h2>
                     <p class="fs-5">Чтобы оставить отзыв, нужно войти в систему.</p>
-                    <!-- 🔹 Две кнопки -->
+
+                    <!-- 🔹 Обновленный блок кнопок на чистом Django -->
                     <div class="d-grid gap-2">
-                      <button id="loginBtn" class="btn btn-primary">Войти в систему</button>
-                      <button id="cancelBtn" class="btn btn-secondary">Спасибо, не надо)</button>
+
+                      <!-- 1. Кнопка входа: пробрасываем next дальше.
+                           Если в URL уже есть ?next=, берем его, если нет — берем главную -->
+                      <a href="{% url 'users:login_user' %}?next={{ request.GET.next|default:'/' }}"
+                         class="btn btn-primary btn-lg">
+                         Войти в систему
+                      </a>
+
+                      <!-- 2. Кнопка отмены: возвращаем юзера туда, откуда он пришел -->
+                      <a href="{{ request.GET.next|default:'/' }}"
+                         class="btn btn-outline-secondary">
+                         Спасибо, не надо)
+                      </a>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // 🔹 Кнопка "Войти в систему"
-        document.getElementById("loginBtn").addEventListener("click", function () {
-            alert("Чтобы оставить отзыв, нужно войти в систему.");
-            window.location.href = "{% url 'users:login_user' %}";
-        });
-
-        // 🔹 Кнопка "Спасибо, не надо"
-        document.getElementById("cancelBtn").addEventListener("click", function () {
-            window.location.href = "{% url 'main:main_page' %}";  // редирект на главную
-        });
-    </script>
 </body>
 </html>
