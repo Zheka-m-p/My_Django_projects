@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
-from . models import Post
+from . models import Post, Comment
+from . forms import CommentForm
 from django.urls import reverse, reverse_lazy
 
 from django.contrib.auth.mixins import LoginRequiredMixin # 🔹 Импортируем миксин и ниже ошибку
@@ -36,6 +37,12 @@ class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/solo_post.html'
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Добавляем пустую форму в контекст, чтобы вывести её в шаблоне
+        context['comment_form'] = CommentForm()
+        return context
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
@@ -100,3 +107,37 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         # Автоматически привязываем текущего юзера к посту
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    ''' Вьюха для СОЗДАНИЯ комментария'''
+    model = Comment
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user # Привязываем текущего юзера к комментарию
+        # Берем id поста из URL и привязываем коммент к этому посту
+        form.instance.post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        # После отправки возвращаем юзера на страницу того же поста
+        return reverse_lazy('blog:solo_post', kwargs={'pk': self.kwargs['pk']})
+
+
+class CommentDeleteView(LoginRequiredMixin, DeleteView):
+    '''Вьюха для УДАЛЕНИЯ комментария'''
+    model = Comment
+    # Можно использовать твой готовый шаблон для удаления
+    template_name = 'blog/delete_post.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        comment = self.get_object()
+        # ПРОВЕРКА ПРАВ: Если ты автор коммента ИЛИ автор поста — удалять можно
+        if comment.author == request.user or comment.post.author == request.user:
+            return super().dispatch(request, *args, **kwargs)
+        raise PermissionDenied("Нельзя удалять чужие комментарии!")
+
+    def get_success_url(self):
+        # После удаления возвращаемся на страницу поста
+        return reverse_lazy('blog:solo_post', kwargs={'pk': self.object.post.pk})

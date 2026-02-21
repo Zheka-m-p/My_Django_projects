@@ -48,5 +48,54 @@
         </div>
     </div>
 </div>
+
+<div class="container mt-5 mb-5">
+    <hr>
+    <h3>Комментарии ({{ post.comment_set.count }}):</h3>
+
+    <!-- 1. Список всех комментариев -->
+    {% for comment in post.comment_set.all %}
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <p class="mb-1">
+                    <strong>{{ comment.author.username }}</strong>
+                    {% if comment.author == post.author %}
+                        <span class="badge bg-primary">Автор поста</span>
+                    {% endif %}
+                    <small class="text-muted ms-2">{{ comment.created_at|date:"d.m.Y H:i" }}</small>
+                </p>
+                <p class="card-text">{{ comment.content|linebreaks }}</p>
+
+                <!-- Кнопка удаления (видна автору коммента или автору поста) -->
+                {% if user == comment.author or user == post.author %}
+                    <a href="{% url 'blog:delete_comment' comment.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted">Комментариев пока нет. Будьте первым!</p>
+    {% endfor %}
+
+    <hr>
+
+    <!-- 2. Форма добавления (только для залогиненных) -->
+    {% if user.is_authenticated %}
+        <div class="card p-4">
+            <h4 class="mb-3">Оставить комментарий:</h4>
+            <!-- Данные отправляются на вьюху CommentCreateView -->
+            <form method="post" action="{% url 'blog:add_comment' post.pk %}">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit" class="btn btn-success">Опубликовать</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <a href="{% url 'login' %}">Войдите</a>, чтобы оставить комментарий.
+        </div>
+    {% endif %}
+</div>
+
+
 </body>
 </html>
