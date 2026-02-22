@@ -18,7 +18,8 @@ class UserRegisterView(CreateView):
         '''Вытаскивает 'next' из ссылки, если он там есть.
         Если есть, отправляет на логин и пробрасывает 'next' дальше'''
 
-        next_url = self.request.GET.get('next')
+        # Берем next сначала из POST (скрытое поле), потом из GET (URL)
+        next_url = self.request.POST.get('next') or self.request.GET.get('next')
         if next_url:
             return f"{reverse_lazy('users:login_user')}?next={next_url}"
         return reverse_lazy('users:login_user')
@@ -32,4 +33,3 @@ class UserLoginView(LoginView):
 class UserLogoutView(LogoutView):
     pass # убрал next_page, чтобы переходило на ту же страницу, где и был, перед выходом
     # next_page = 'main:main_page'  # куда перейти после выхода
-

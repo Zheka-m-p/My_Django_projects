@@ -81,7 +81,7 @@
                         </div>
                         <!-- Кнопки -->
                         <div class="d-grid gap-3">
-                            <a href="{% url 'users:register_user' %}" class="btn btn-primary">Зарегистрироваться</a>
+                            <a href="{% url 'users:register_user' %}?next={{ request.path }}" class="btn btn-primary">Зарегистрироваться</a>
                             <a href="{% url 'main:main_page' %}" class="btn btn-outline-secondary">На главную</a>
                         </div>
                     {% endif %}

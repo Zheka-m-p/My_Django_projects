@@ -11,8 +11,8 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     # 🔹 Проверяем, залогинен ли пользователь
     if not request.user.is_authenticated:
-        # Если нет — показываем страницу с alert и кнопкой "Войти"
-        return render(request, 'feedback/need_login.html')
+        # Передаем текущий адрес страницы (например, '/feedback/') в шаблон
+        return render(request, 'feedback/need_login.html', {'next_url': request.path})
 
     # 🔹 Проверяем, есть ли уже отзыв от этого пользователя, так как .exists() возвращает False, если записей нет
     feedback_exists = Feedback.objects.filter(user=request.user).exists()
