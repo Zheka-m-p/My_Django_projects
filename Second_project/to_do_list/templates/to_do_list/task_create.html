@@ -1,0 +1,39 @@
+{% extends 'to_do_list/base_todo.html' %}
+
+{% block title %}Новая задача | ToDo{% endblock title %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3">➕ Новая задача</h1>
+    <a href="{% url 'todo:to_do_home' %}" class="btn btn-outline-secondary">← Назад к списку</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="{{ form.title.id_for_label }}" class="form-label">Название</label>
+                <input type="text" name="title" value="{{ form.title.value|default:'' }}" class="form-control" id="{{ form.title.id_for_label }}" placeholder="Например: Погладить кота">
+                {% if form.title.errors %}
+                    <div class="text-danger small mt-1">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.description.id_for_label }}" class="form-label">Описание (необязательно)</label>
+                <textarea name="description" class="form-control" id="{{ form.description.id_for_label }}" rows="3" placeholder="Подробности...">{{ form.description.value|default:'' }}</textarea>
+                {% if form.description.errors %}
+                    <div class="text-danger small mt-1">{{ form.description.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">💾 Создать задачу</button>
+                <a href="{% url 'todo:to_do_home' %}" class="btn btn-outline-secondary">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

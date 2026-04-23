@@ -27,6 +27,7 @@ urlpatterns = [
     path('movie/', include('movie_app.urls', namespace='movie')),
     path('blog/', include('blog.urls', namespace='blog')),
     path('users/', include('users.urls', namespace='users')),
+    path('todo/', include('to_do_list.urls', namespace='todo')),
     path('', include('main.urls', namespace='main')),
 
 ]

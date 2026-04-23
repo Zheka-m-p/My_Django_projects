@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'movie_app',
     'feedback',
     'blog',
+    'to_do_list',
     'users',
     'main',
 

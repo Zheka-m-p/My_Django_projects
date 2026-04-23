@@ -1,0 +1,88 @@
+{% extends 'to_do_list/base_todo.html' %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+    <!-- Приветствие и статистика -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3">Привет, {{ request.user.username }}! 👋</h1>
+            <p class="text-muted">
+                У тебя <strong>{{ total_tasks }}</strong> задач
+                (из них <strong>{{ incomplete_tasks }}</strong> невыполненных)
+            </p>
+        </div>
+        <a href="{% url 'todo:task_create' %}" class="btn btn-primary">➕ Новая задача</a>
+    </div>
+
+    <!-- Поиск -->
+    <div class="mb-4">
+        <form method="get" class="d-flex">
+            <input class="form-control me-2" type="search" name="q" placeholder="Найти задачу..." value="{{ request.GET.q }}" aria-label="Search">
+            <button class="btn btn-outline-secondary" type="submit">Найти</button>
+        </form>
+    </div>
+
+    <!-- Список задач -->
+    {% if tasks %}
+        <div class="list-group">
+            {% for task in tasks %}
+                <div class="list-group-item list-group-item-action d-flex align-items-center
+                    {% if task.complete %}opacity-50 bg-light{% endif %}">
+
+                    <!-- Иконка статуса -->
+                    <span class="me-3 fs-5">
+                        {% if task.complete %}
+                            ✅
+                        {% else %}
+                            ❌
+                        {% endif %}
+                    </span>
+
+                    <!-- Текст задачи (перечёркнут, если выполнена) -->
+                    <div class="flex-grow-1 {% if task.complete %}text-decoration-line-through{% endif %}">
+                        <h6 class="mb-1">{{ task.title }}</h6>
+                        {% if task.description %}
+                            <small class="text-muted">{{ task.description|truncatechars:50 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <!-- Блок действий, отделённый вертикальной чертой -->
+                    <div class="ms-3 ps-3 border-start d-flex">
+
+                        <form method="post" action="{% url 'todo:task_toggle' task.pk %}" class="me-1">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-success" title="Переключить статус">
+                                {% if task.complete %}
+                                    ↩️
+                                {% else %}
+                                    ✅
+                                {% endif %}
+                            </button>
+                        </form>
+
+                        <a href="{% url 'todo:task_detail' task.pk %}" class="btn btn-sm btn-outline-info me-1" title="Подробнее">👁️</a>
+                        <a href="{% url 'todo:task_update' task.pk %}" class="btn btn-sm btn-outline-warning me-1" title="Редактировать">✏️</a>
+                        <a href="{% url 'todo:task_delete' task.pk %}" class="btn btn-sm btn-outline-danger" title="Удалить">🗑️</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info mt-4">
+            📭 У тебя пока нет задач. <a href="{% url 'todo:task_create' %}" class="alert-link">Создай первую</a>!
+        </div>
+    {% endif %}
+
+{% else %}
+    <!-- Блок для неавторизованных -->
+    <div class="text-center mt-5">
+        <h2 class="h4">🔒 Чтобы управлять задачами, войдите в аккаунт</h2>
+        <p class="text-muted">Это займёт всего минуту!</p>
+        <a href="{% url 'users:login_user' %}?next={{ request.path }}" class="btn btn-primary">Войти</a>
+        <a href="{% url 'users:register_user' %}?next={{ request.path }}" class="btn btn-outline-primary ms-2">Зарегистрироваться</a>
+        <a href="{% url 'main:main_page' %}" class="btn btn-outline-secondary">На главную</a>
+    </div>
+{% endif %}
+
+{% endblock content %}

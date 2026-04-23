@@ -34,7 +34,7 @@
         <input type="hidden" name="next" value="{{ request.GET.next }}">
         <div class="mb-3">
             <label class="form-label">{{ form.username.label }}</label>
-            <input type="text" name="{{ form.username.name }}" class="form-control"/>
+            <input type="text" name="{{ form.username.name }}" class="form-control" value="{{ form.username.value|default:'' }}">
             {{ form.username.errors }}
         </div>
         <div class="mb-3">

@@ -11,7 +11,8 @@
     <div class="container">
         <h1 class="text-center mb-5">Выберите приложение</h1>
         <div class="row">
-            <div class="col-md-3 mb-4">
+            <!-- Гороскоп -->
+            <div class="col-md-4 mb-4">
                 <a href="{% url 'horoscope:home_horoscope' %}" class="card text-decoration-none text-dark h-100">
                     <div class="card-body text-center">
                         <h5 class="card-title">🔮 Гороскоп</h5>
@@ -20,7 +21,8 @@
                 </a>
             </div>
 
-            <div class="col-md-3 mb-4">
+            <!-- Блог -->
+            <div class="col-md-4 mb-4">
                 <a href="{% url 'blog:home' %}" class="card text-decoration-none text-dark h-100">
                     <div class="card-body text-center">
                         <h5 class="card-title">📝 Блог</h5>
@@ -29,7 +31,8 @@
                 </a>
             </div>
 
-            <div class="col-md-3 mb-4">
+            <!-- Фильмы -->
+            <div class="col-md-4 mb-4">
                 <a href="{% url 'movie:movie_app_home_page' %}" class="card text-decoration-none text-dark h-100">
                     <div class="card-body text-center">
                         <h5 class="card-title">🎬 Фильмы</h5>
@@ -38,11 +41,22 @@
                 </a>
             </div>
 
-            <div class="col-md-3 mb-4">
+            <!-- Обратная связь -->
+            <div class="col-md-4 mb-4">
                 <a href="{% url 'feedback:home' %}" class="card text-decoration-none text-dark h-100">
                     <div class="card-body text-center">
                         <h5 class="card-title">💬 Обратная связь</h5>
                         <p class="card-text">Напишите нам</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- ToDo лист -->
+            <div class="col-md-4 mb-4">
+                <a href="{% url 'todo:to_do_home' %}" class="card text-decoration-none text-dark h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">✅ ToDo лист</h5>
+                        <p class="card-text">Управляйте своими задачами</p>
                     </div>
                 </a>
             </div>
