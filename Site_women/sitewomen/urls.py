@@ -21,4 +21,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('women.urls')),
+
+
 ]
+
+handler404 = 'women.views.page_not_found'
