@@ -1,5 +1,6 @@
-from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
 
 def index(request):  # request - это ссылка на класс НttpRequest, содержит инфу о запросе
@@ -27,6 +28,15 @@ def categories_by_slug(request, cat_slug):
 
 
 def archive(request, year):
+    if year > 2025:
+        # return redirect('/', permanent=True) # редирект по адресу
+        # return redirect(index) # по имени функции
+        # return redirect('home') # по имени маршрута url
+        # return redirect('cats_slug', 'music') # по имени с параметрами запроса
+        # return HttpResponseRedirect('/') # или же HttpResponsePermanentRedirect(на 301)
+
+        url = reverse('cats_slug', args=('music',))
+        return redirect(url)
     return HttpResponse(f'<h1>Архив по годам</h1><p>year: {year}</p>')
 
 
