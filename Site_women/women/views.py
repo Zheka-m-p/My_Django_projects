@@ -4,7 +4,11 @@ from django.urls import reverse
 
 
 def index(request):  # request - это ссылка на класс НttpRequest, содержит инфу о запросе
-    return HttpResponse("Страница приложения women")
+    return render(request, 'women/index.html')
+
+
+def about(request):
+    return render(request, 'women/about.html')
 
 
 def categories(request, cat_id):

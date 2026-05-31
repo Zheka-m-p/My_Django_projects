@@ -63,8 +63,8 @@ ROOT_URLCONF = 'sitewomen.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [], # позволяет прописывать нестандартные пути для шаблонов
+        'APP_DIRS': True, # значит надо искать в подкаталогах templates
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
