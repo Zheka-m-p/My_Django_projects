@@ -6,25 +6,18 @@ from django.template.defaultfilters import slugify, slice_filter
 menu = ["О сайте", "Добавить статью", "Обратная связь", "Войти"]
 
 
-class Myclass:
-    def __init__(self, first_name, last_name):
-        self.first_name = first_name
-        self.last_name = last_name
-
-    def get_info(self):
-        return self.first_name + " " + self.last_name
+data_db = [
+    {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_published': True},
+    {'id': 2, 'title': 'Марго Робби', 'content': 'Биография Марго Робби', 'is_published': False},
+    {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулия Робертс', 'is_published': True},
+]
 
 
 def index(request):  # request - это ссылка на класс НttpRequest, содержит инфу о запросе
     data = {
-        'title': 'главная страница',
+        'title': 'Главная страница',
         'menu': menu,
-        'float': 28.56,
-        'lst': [1, 2, 'abc', True],
-        'set': {1, 2, 3, 2, 5},
-        'dict': {'key1': 'value1', 'key2': 'value2'},
-        'obj': Myclass('Марь', 'Ивановна'),
-        'url': slugify('The main page'),
+        'posts': data_db,
     }
     return render(request, 'women/index.html', context=data)
 

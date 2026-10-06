@@ -5,13 +5,21 @@
     <title>{{ title|default:"Без заголовка" }}</title>
 </head>
 <body>
-<p>{{ menu|join:" @ " }}</p>
-<p>{{ float|divisibleby:"2" }}</p>
-<p>{{ lst }}</p>
-<p>{{ set }}</p>
-<p>{{ dict.key1 }}</p>
-<p>{{ obj.get_info }}</p>
-<p>{{ url }}</p>
-<h1>{{ title|capfirst }}</h1>
+<p>{{ menu|join:" | " }}</p>
+<h1>{{ title }}</h1>
+
+<ul>
+    {% for post in posts %}
+    {% if post.is_published %}
+    <li>
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content }}</p>
+        {% if not forloop.last %}
+                <hr>
+        {% endif %}
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
 </body>
 </html>
