@@ -16,7 +16,7 @@ data_db = [
 ]
 
 
-def index(request):  # request - это ссылка на класс НttpRequest, содержит инфу о запросе
+def index(request):  # request - это ссылка на класс НttpRequest, содержит инфу о запрос
     data = {
         'title': 'Главная страница',
         'menu': menu,
@@ -26,7 +26,7 @@ def index(request):  # request - это ссылка на класс НttpReques
 
 
 def about(request):
-    data = {'title': 'О сайте'}
+    data = {'title': 'О сайте', 'menu': menu}
     return render(request, 'women/about.html', data)
 
 
