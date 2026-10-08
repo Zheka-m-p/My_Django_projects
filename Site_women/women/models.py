@@ -1,6 +1,6 @@
 from django.db import models
 
-class Model(models.Model):
+class Women(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True) #blank = можно поле оставлять пустым при создании модели
     time_create = models.DateTimeField(auto_now_add=True) # заполняет автоматом, в момент создания записи
