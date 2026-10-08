@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_extensions', # пакет-расширение, который может упростить отработку ORM-команд в консоли
     'women.apps.WomenConfig', # можно просто 'women'
 ]
 

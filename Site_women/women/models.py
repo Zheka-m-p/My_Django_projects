@@ -6,3 +6,4 @@ class Women(models.Model):
     time_create = models.DateTimeField(auto_now_add=True) # заполняет автоматом, в момент создания записи
     time_update = models.DateTimeField(auto_now=True) # меняет поле, когда поле обнолвляется
     is_published = models.BooleanField(default=False) # опубликовано или нет(булево поле)
+
