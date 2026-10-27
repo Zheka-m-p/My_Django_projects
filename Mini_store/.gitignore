@@ -34,4 +34,6 @@ media/
 # Byte-compiled files
 *.py[co]
 
+# новое для этого проекта(ветки)
 .pylintrc
+/products
